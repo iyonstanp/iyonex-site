@@ -10,14 +10,14 @@ const WA = "https://wa.me/918111080117";
 /* Palette: Royal Navy · Deep Emerald · Burgundy Plum · Warm Slate · Champagne Gold */
 const C = {
   /* Section Backgrounds — Rich & Varied */
-  heroNav:    "#0B1628",      /* Hero: deep royal navy */
-  navy:       "#0F1E35",      /* Differentiators: midnight navy */
-  emeraldBg:  "#0A1F1A",      /* Services: deep forest emerald */
-  burgundy:   "#1A0F1E",      /* Testimonials: rich plum/burgundy */
-  royalBlue:  "#0D1830",      /* CTA/About hero */
-  warmSlate:  "#141820",      /* Products/Pricing */
-  tealBg:     "#0A1C1A",      /* Industry section */
-  onyxBg:     "#0D0D0F",      /* Contact/Blog hero */
+  heroNav:    "#eff1f4",      /* Hero: deep royal navy */
+  navy:       "#eaedf2",      /* Differentiators: midnight navy */
+  emeraldBg:  "#ebf3f1",      /* Services: deep forest emerald */
+  burgundy:   "#f3eff4",      /* Testimonials: rich plum/burgundy */
+  royalBlue:  "#f1f3f5",      /* CTA/About hero */
+  warmSlate:  "#f5f6f8",      /* Products/Pricing */
+  tealBg:     "#f2f5f4",      /* Industry section */
+  onyxBg:     "#f5f5f8",      /* Contact/Blog hero */
 
   /* Warm Card Surfaces */
   cardNavy:   "#132040",      /* card on navy */
