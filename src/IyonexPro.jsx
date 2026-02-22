@@ -430,7 +430,7 @@ function Navbar({ page, setPage }) {
         </div>
 
         {/* Desktop nav links */}
-        <div className="nav-desktop-links" style={{ display: "flex", gap: 0 }}>
+        <div className="nav-desktop-links">
           {pages.map(p => (
             <button key={p} onClick={() => navTo(p)} style={{
               background: "none", border: "none", padding: "8px 14px",
@@ -450,7 +450,7 @@ function Navbar({ page, setPage }) {
 
         {/* Mobile hamburger */}
         <button className="mob-menu-btn" onClick={() => setMenuOpen(o => !o)}
-          style={{ background: "none", border: `1px solid ${menuOpen ? C.borderGold : C.border}`, borderRadius: 6, padding: "8px 10px", cursor: "pointer", display: "none", flexDirection: "column", gap: 5, transition: "border-color 0.2s" }}>
+          style={{ background: "none", border: `1px solid ${menuOpen ? C.borderGold : C.border}`, borderRadius: 6, padding: "8px 10px", cursor: "pointer", flexDirection: "column", gap: 5, transition: "border-color 0.2s" }}>
           <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
           <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", opacity: menuOpen ? 0 : 1 }} />
           <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
@@ -458,7 +458,7 @@ function Navbar({ page, setPage }) {
       </nav>
 
       {/* Mobile nav overlay */}
-      <div className={`mob-nav-overlay${menuOpen ? " open" : ""}`} style={{ display: "none" }}>
+      <div className={`mob-nav-overlay${menuOpen ? " open" : ""}`}>
         {pages.map((p, i) => (
           <button key={p} onClick={() => navTo(p)} style={{
             background: page === p ? `rgba(201,168,76,0.08)` : "transparent",
@@ -1394,7 +1394,7 @@ function BlogPage({ setPage }) {
       </section>
 
       <section style={{ padding: "100px 64px", background: "linear-gradient(135deg, #0F1E35 0%, #131C30 100%)" }}>
-       <div style={{ maxWidth: 1280, margin: "0 auto" }} className="r-auto-3">
+        <div style={{ maxWidth: 1280, margin: "0 auto"}} className="r-auto-3">
           {BLOG.map((post, i) => (
             <Reveal key={post.title} delay={i * 0.07}>
               <Card3D intensity={10}>
@@ -1665,7 +1665,7 @@ export default function IyonexPremium() {
 
         /* ── MOBILE NAV ────────────────────────── */
         .mob-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-        .nav-desktop-links { display: flex; gap: 0; }
+        .nav-desktop-links { display: flex; gap: 0; align-items: center; }
         .nav-desktop-cta { display: block; }
         .mob-nav-overlay { display: none; }
 
@@ -1711,6 +1711,8 @@ export default function IyonexPremium() {
           .r-pad-sm { padding: 60px 40px; }
           .r-pad-xs { padding: 40px 40px; }
           .r-hero-pad { padding: 110px 40px 80px; }
+          nav { padding: 0 24px !important; }
+          .nav-desktop-links button { padding: 8px 10px !important; font-size: 0.72rem !important; }
         }
 
         @media (max-width: 768px) {
