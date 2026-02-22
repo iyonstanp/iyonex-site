@@ -1422,9 +1422,10 @@ function ContactPage() {
   style={{
     maxWidth: 1200,
     margin: "0 auto",
-    borderRadius: 10,
+    borderRadius: 14,
     overflow: "hidden",
-    border: `1px solid ${C.border}`
+    border: `2px solid ${C.blue}`,
+    boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
   }}
 >
   <iframe
@@ -1434,8 +1435,7 @@ function ContactPage() {
     height="420"
     style={{
       border: 0,
-      display: "block",
-      filter: "grayscale(80%) contrast(1.1)"
+      display: "block"
     }}
     allowFullScreen
     loading="lazy"
