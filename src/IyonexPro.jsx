@@ -190,26 +190,32 @@ const CERTIFICATIONS = [
 ];
 
 const IMGS = {
-  hero:       "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=85",
-  homeAuto:   "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=85",
-  industrial: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900&q=85",
-  solar:      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=900&q=85",
-  security:   "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=900&q=85",
-  office:     "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=85",
-  factory:    "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=900&q=85",
-  team:       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=900&q=85",
-  puducherry: "https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=900&q=85",
+  hero:       "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1600&q=90",
+  homeAuto:   "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=90",
+  industrial: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1000&q=90",
+  solar:      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1000&q=90",
+  security:   "https://images.unsplash.com/photo-1593440408186-59b1bfecc4dd?w=1000&q=90",
+  office:     "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=90",
+  factory:    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1000&q=90",
+  team:       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&q=90",
+  puducherry: "https://images.unsplash.com/photo-1534093607318-abb497ccc113?w=1000&q=90",
+  smartroom:  "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=1000&q=90",
+  plc:        "https://images.unsplash.com/photo-1518770660439-4636190af475?w=1000&q=90",
+  cctv:       "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=1000&q=90",
+  energy:     "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1000&q=90",
+  product:    "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=1000&q=90",
+  villa:      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1000&q=90",
 };
 
 const SERVICE_IMGS = [
-  "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=700&q=80",
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=80",
-  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=80",
-  "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&q=80",
-  "https://images.unsplash.com/photo-1557597774-9d273605dfa9?w=700&q=80",
-  "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=700&q=80",
-  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80",
+  "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=85",
+  "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=700&q=85",
+  "https://images.unsplash.com/photo-1518770660439-4636190af475?w=700&q=85",
+  "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=700&q=85",
+  "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=700&q=85",
+  "https://images.unsplash.com/photo-1593440408186-59b1bfecc4dd?w=700&q=85",
+  "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=700&q=85",
+  "https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=85",
 ];
 
 /* ─── HOOKS ──────────────────────────────────────────────────────────────────── */
@@ -242,13 +248,59 @@ function Card3D({ children, style = {}, intensity = 16 }) {
     const rect = el.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width - 0.5) * intensity;
     const y = ((e.clientY - rect.top) / rect.height - 0.5) * -intensity;
-    el.style.transform = `perspective(900px) rotateY(${x}deg) rotateX(${y}deg) translateZ(10px)`;
+    el.style.transform = `perspective(1200px) rotateY(${x}deg) rotateX(${y}deg) translateZ(18px) scale(1.02)`;
+    el.style.boxShadow = `${-x * 2}px ${y * 2}px 60px rgba(0,0,0,0.5), 0 0 40px rgba(201,168,76,0.08)`;
   };
-  const reset = () => { if (ref.current) ref.current.style.transform = "perspective(900px) rotateY(0) rotateX(0) translateZ(0)"; };
+  const reset = () => {
+    if (ref.current) {
+      ref.current.style.transform = "perspective(1200px) rotateY(0) rotateX(0) translateZ(0) scale(1)";
+      ref.current.style.boxShadow = "none";
+    }
+  };
   return (
     <div ref={ref} onMouseMove={handle} onMouseLeave={reset}
-      style={{ transition: "transform 0.18s ease-out", transformStyle: "preserve-3d", willChange: "transform", ...style }}>
+      style={{ transition: "transform 0.2s cubic-bezier(.2,.9,.3,1), box-shadow 0.2s", transformStyle: "preserve-3d", willChange: "transform", ...style }}>
       {children}
+    </div>
+  );
+}
+
+/* Floating 3D badge */
+function FloatBadge({ icon, label, value, color, style = {} }) {
+  return (
+    <div style={{
+      position: "absolute", background: "rgba(10,14,20,0.92)", backdropFilter: "blur(16px)",
+      border: `1px solid ${color}40`, borderRadius: 12, padding: "14px 18px",
+      boxShadow: `0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px ${color}20, inset 0 1px 0 rgba(255,255,255,0.06)`,
+      animation: "float3d 5s ease-in-out infinite", ...style
+    }}>
+      <div style={{ fontSize: "1.3rem", marginBottom: 4 }}>{icon}</div>
+      <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.58rem", color: "rgba(200,210,220,0.6)", letterSpacing: "2px", textTransform: "uppercase" }}>{label}</div>
+      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1rem", color }}>{value}</div>
+    </div>
+  );
+}
+
+/* 3D Particle system */
+function Particles() {
+  const particles = Array.from({ length: 18 }, (_, i) => ({
+    id: i,
+    left: `${(i * 23 + 7) % 95}%`,
+    delay: `${(i * 0.7) % 6}s`,
+    duration: `${5 + (i % 4) * 1.5}s`,
+    size: i % 3 === 0 ? 4 : i % 3 === 1 ? 3 : 2,
+  }));
+  return (
+    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", overflow: "hidden" }}>
+      {particles.map(p => (
+        <div key={p.id} style={{
+          position: "absolute", bottom: "-10%", left: p.left,
+          width: p.size, height: p.size, borderRadius: "50%",
+          background: `radial-gradient(circle, ${C.gold}, transparent)`,
+          opacity: 0.6,
+          animation: `particle-rise ${p.duration} ease-in ${p.delay} infinite`
+        }} />
+      ))}
     </div>
   );
 }
@@ -260,7 +312,7 @@ function Eyebrow({ children, light }) {
   return (
     <div style={{ display: "inline-flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
       <div style={{ width: 32, height: 1, background: `linear-gradient(90deg, ${C.gold}, transparent)` }} />
-      <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.68rem", letterSpacing: "3px", textTransform: "uppercase", color: C.gold }}>{children}</span>
+      <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.68rem", letterSpacing: "3px", textTransform: "uppercase", color: C.gold }}>{children}</span>
       <div style={{ width: 32, height: 1, background: `linear-gradient(270deg, ${C.gold}, transparent)` }} />
     </div>
   );
@@ -270,8 +322,8 @@ function SectionTitle({ eyebrow, title, subtitle, light, center }) {
   return (
     <div style={{ textAlign: center ? "center" : "left", maxWidth: center ? 680 : "none", margin: center ? "0 auto 72px" : "0 0 60px" }}>
       <Eyebrow light={light}>{eyebrow}</Eyebrow>
-      <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2rem, 3.2vw, 3rem)", color: light ? C.platinum : C.darkText, lineHeight: 1.15, letterSpacing: "-0.025em", marginBottom: subtitle ? 18 : 0 }}>{title}</h2>
-      {subtitle && <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: light ? C.silver : "#64748B", lineHeight: 1.8, maxWidth: 580, margin: center ? "0 auto" : 0 }}>{subtitle}</p>}
+      <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.2rem, 3.4vw, 3.2rem)", color: light ? C.platinum : C.darkText, lineHeight: 1.12, letterSpacing: "-0.02em", marginBottom: subtitle ? 18 : 0, textShadow: light ? "0 2px 40px rgba(0,0,0,0.5)" : "none" }}>{title}</h2>
+      {subtitle && <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: light ? C.silver : "#64748B", lineHeight: 1.8, maxWidth: 580, margin: center ? "0 auto" : 0 }}>{subtitle}</p>}
     </div>
   );
 }
@@ -281,7 +333,7 @@ function GoldBtn({ children, onClick }) {
   const [h, setH] = useState(false);
   return (
     <button onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onClick={onClick}
-      style={{ background: h ? `linear-gradient(135deg, ${C.goldLight}, ${C.gold})` : `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "15px 36px", borderRadius: 2, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.88rem", letterSpacing: "1.5px", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s", boxShadow: h ? `0 12px 40px rgba(201,168,76,0.4)` : `0 4px 16px rgba(201,168,76,0.2)` }}>
+      style={{ background: h ? `linear-gradient(135deg, ${C.goldLight}, ${C.gold})` : `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "15px 36px", borderRadius: 2, fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.88rem", letterSpacing: "1.5px", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s", boxShadow: h ? `0 12px 40px rgba(201,168,76,0.4)` : `0 4px 16px rgba(201,168,76,0.2)` }}>
       {children}
     </button>
   );
@@ -292,7 +344,7 @@ function GhostBtn({ children, onClick, gold }) {
   const [h, setH] = useState(false);
   return (
     <button onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)} onClick={onClick}
-      style={{ background: h ? "rgba(255,255,255,0.06)" : "transparent", color: gold ? C.gold : C.platinum, border: `1px solid ${gold ? C.borderGold : "rgba(255,255,255,0.2)"}`, padding: "14px 34px", borderRadius: 2, fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.88rem", letterSpacing: "1px", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s" }}>
+      style={{ background: h ? "rgba(255,255,255,0.06)" : "transparent", color: gold ? C.gold : C.platinum, border: `1px solid ${gold ? C.borderGold : "rgba(255,255,255,0.2)"}`, padding: "14px 34px", borderRadius: 2, fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.88rem", letterSpacing: "1px", textTransform: "uppercase", cursor: "pointer", transition: "all 0.3s" }}>
       {children}
     </button>
   );
@@ -303,7 +355,7 @@ function CheckItem({ text, light }) {
   return (
     <div style={{ display: "flex", alignItems: "flex-start", gap: 12, marginBottom: 12 }}>
       <div style={{ width: 6, height: 6, borderRadius: "50%", background: C.teal, flexShrink: 0, marginTop: 7 }} />
-      <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: light ? "rgba(232,236,240,0.75)" : "#64748B", lineHeight: 1.65 }}>{text}</span>
+      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9rem", color: light ? "rgba(232,236,240,0.75)" : "#64748B", lineHeight: 1.65 }}>{text}</span>
     </div>
   );
 }
@@ -353,8 +405,8 @@ function Navbar({ page, setPage }) {
             </svg>
           </div>
           <div>
-            <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.35rem", color: C.platinum, letterSpacing: "3px", lineHeight: 1 }}>IYONEX</div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.5rem", color: C.gold, letterSpacing: "3.5px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
+            <div style={{ fontFamily: "'Syncopate', sans-serif", fontWeight: 700, fontSize: "1.25rem", color: C.platinum, letterSpacing: "5px", lineHeight: 1 }}>IYONEX</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.5rem", color: C.gold, letterSpacing: "3.5px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
           </div>
         </div>
 
@@ -363,7 +415,7 @@ function Navbar({ page, setPage }) {
           {pages.map(p => (
             <button key={p} onClick={() => setPage(p)} style={{
               background: "none", border: "none", padding: "8px 16px",
-              fontFamily: "'DM Sans', sans-serif", fontWeight: page === p ? 600 : 400,
+              fontFamily: "'Outfit', sans-serif", fontWeight: page === p ? 600 : 400,
               fontSize: "0.82rem", letterSpacing: "0.8px", textTransform: "uppercase",
               color: page === p ? C.gold : "rgba(232,236,240,0.6)",
               cursor: "pointer", transition: "color 0.2s",
@@ -408,60 +460,60 @@ function Footer({ setPage }) {
                 </svg>
               </div>
               <div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.3rem", color: C.platinum, letterSpacing: "3px" }}>IYONEX</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.5rem", color: C.gold, letterSpacing: "3.5px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
+                <div style={{ fontFamily: "'Syncopate', sans-serif", fontWeight: 700, fontSize: "1.2rem", color: C.platinum, letterSpacing: "5px" }}>IYONEX</div>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.5rem", color: C.gold, letterSpacing: "3.5px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
               </div>
             </div>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: C.silver, lineHeight: 1.85, maxWidth: 310, marginBottom: 28 }}>Pioneering intelligent automation across residential, industrial, and commercial sectors — headquartered in Puducherry, serving South India and beyond.</p>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.88rem", color: C.silver, lineHeight: 1.85, maxWidth: 310, marginBottom: 28 }}>Pioneering intelligent automation across residential, industrial, and commercial sectors — headquartered in Puducherry, serving South India and beyond.</p>
             <div style={{ display: "flex", gap: 12 }}>
               {[["5 Yrs", "Free Service", C.emerald], ["2 Yrs", "Warranty", C.teal]].map(([n, l, col]) => (
                 <div key={l} style={{ border: `1px solid ${col}30`, borderRadius: 4, padding: "12px 18px", textAlign: "center" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.1rem", color: col }}>{n}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>{l}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.1rem", color: col }}>{n}</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>{l}</div>
                 </div>
               ))}
             </div>
           </div>
 
           <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.68rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 24 }}>Navigate</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.68rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 24 }}>Navigate</div>
             {pages.map(p => (
               <div key={p} onClick={() => setPage(p)}
-                style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.88rem", color: C.silver, marginBottom: 12, cursor: "pointer", transition: "color 0.2s" }}
+                style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.88rem", color: C.silver, marginBottom: 12, cursor: "pointer", transition: "color 0.2s" }}
                 onMouseEnter={e => e.target.style.color = C.platinum}
                 onMouseLeave={e => e.target.style.color = C.silver}>{p}</div>
             ))}
           </div>
 
           <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.68rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 24 }}>Services</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.68rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 24 }}>Services</div>
             {["Home Automation","Industrial Automation","Electrical Engineering","Product Development","Security Solutions","Solar & Energy","Building Management"].map(s => (
-              <div key={s} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.85rem", color: C.silver, marginBottom: 10 }}>{s}</div>
+              <div key={s} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.85rem", color: C.silver, marginBottom: 10 }}>{s}</div>
             ))}
           </div>
 
           <div>
-            <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.68rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 24 }}>Contact</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.68rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 24 }}>Contact</div>
             {[[PHONE, `tel:+91${PHONE}`, "Phone"], [EMAIL, `mailto:${EMAIL}`, "Email"]].map(([val, href, label]) => (
               <div key={label} style={{ marginBottom: 18 }}>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>{label}</div>
-                <a href={href} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: C.teal, textDecoration: "none" }}>{val}</a>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>{label}</div>
+                <a href={href} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9rem", color: C.teal, textDecoration: "none" }}>{val}</a>
               </div>
             ))}
             <div style={{ marginBottom: 18 }}>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>Address</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.84rem", color: C.silver, lineHeight: 1.7 }}>{ADDRESS}</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>Address</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.84rem", color: C.silver, lineHeight: 1.7 }}>{ADDRESS}</div>
             </div>
             <div style={{ display: "flex", gap: 10, marginTop: 8 }}>
-              <a href={WA} target="_blank" rel="noreferrer" style={{ background: "#25D366", color: "#fff", padding: "9px 16px", borderRadius: 2, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.78rem", letterSpacing: "0.5px" }}>WhatsApp</a>
-              <a href={`tel:+91${PHONE}`} style={{ background: C.teal, color: C.heroNav, padding: "9px 16px", borderRadius: 2, textDecoration: "none", fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.78rem", letterSpacing: "0.5px" }}>Call Now</a>
+              <a href={WA} target="_blank" rel="noreferrer" style={{ background: "#25D366", color: "#fff", padding: "9px 16px", borderRadius: 2, textDecoration: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.78rem", letterSpacing: "0.5px" }}>WhatsApp</a>
+              <a href={`tel:+91${PHONE}`} style={{ background: C.teal, color: C.heroNav, padding: "9px 16px", borderRadius: 2, textDecoration: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.78rem", letterSpacing: "0.5px" }}>Call Now</a>
             </div>
           </div>
         </div>
 
         <div style={{ borderTop: `1px solid ${C.border}`, paddingTop: 28, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 12 }}>
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.muted }}>© 2025 Iyonex Automation. All rights reserved.</span>
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.muted }}>Crafted with precision in Puducherry, India</span>
+          <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.muted }}>© 2025 Iyonex Automation. All rights reserved.</span>
+          <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.muted }}>Crafted with precision in Puducherry, India</span>
         </div>
       </div>
     </footer>
@@ -478,14 +530,14 @@ function FaqItem({ faq, i }) {
           width: "100%", padding: "22px 0", background: "none", border: "none", cursor: "pointer",
           display: "flex", justifyContent: "space-between", alignItems: "center", gap: 24
         }}>
-          <span style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 500, color: C.platinum, fontSize: "0.95rem", textAlign: "left", lineHeight: 1.6 }}>{faq.q}</span>
+          <span style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 500, color: C.platinum, fontSize: "0.95rem", textAlign: "left", lineHeight: 1.6 }}>{faq.q}</span>
           <div style={{ width: 28, height: 28, border: `1px solid ${open ? C.gold : C.border}`, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, transition: "border-color 0.3s" }}>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style={{ transition: "transform 0.3s", transform: open ? "rotate(180deg)" : "none" }}>
               <path d="M6 9l6 6 6-6" stroke={open ? C.gold : C.silver} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
         </button>
-        {open && <div style={{ padding: "0 0 24px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: C.silver, lineHeight: 1.85, maxWidth: "90%" }}>{faq.a}</div>}
+        {open && <div style={{ padding: "0 0 24px", fontFamily: "'Outfit', sans-serif", fontSize: "0.9rem", color: C.silver, lineHeight: 1.85, maxWidth: "90%" }}>{faq.a}</div>}
       </div>
     </Reveal>
   );
@@ -504,25 +556,34 @@ function HomePage({ setPage }) {
       <section style={{
         minHeight: "100vh", position: "relative", overflow: "hidden",
         display: "flex", alignItems: "center",
-        background: `linear-gradient(150deg, rgba(11,22,40,0.95) 0%, rgba(15,30,53,0.88) 60%, rgba(0,200,180,0.08) 100%), url(${IMGS.hero}) center/cover no-repeat`,
+        background: `linear-gradient(150deg, rgba(5,10,20,0.97) 0%, rgba(8,16,32,0.92) 50%, rgba(0,100,90,0.12) 100%), url(${IMGS.hero}) center/cover no-repeat`,
       }}>
+        {/* Animated scanline */}
+        <div style={{ position: "absolute", left: 0, right: 0, height: "2px", background: `linear-gradient(90deg, transparent, ${C.gold}60, transparent)`, animation: "scanline 8s linear infinite", zIndex: 1, pointerEvents: "none" }} />
         {/* Fine grid overlay */}
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", pointerEvents: "none", opacity: 0.4 }} />
         {/* Ambient glows */}
-        <div style={{ position: "absolute", top: "15%", right: "5%", width: 700, height: 700, background: `radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 60%)`, pointerEvents: "none" }} />
-        <div style={{ position: "absolute", bottom: "10%", left: "0%", width: 500, height: 500, background: `radial-gradient(circle, rgba(0,200,180,0.07) 0%, transparent 65%)`, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", top: "10%", right: "5%", width: 800, height: 800, background: `radial-gradient(circle, rgba(201,168,76,0.07) 0%, transparent 60%)`, pointerEvents: "none", animation: "orb-pulse 6s ease-in-out infinite" }} />
+        <div style={{ position: "absolute", bottom: "5%", left: "-5%", width: 600, height: 600, background: `radial-gradient(circle, rgba(0,200,180,0.09) 0%, transparent 65%)`, pointerEvents: "none" }} />
+        {/* 3D Orbital rings */}
+        <div style={{ position: "absolute", top: "50%", right: "-8%", transform: "translateY(-50%)", width: 600, height: 600, perspective: "1200px", pointerEvents: "none", opacity: 0.15 }}>
+          <div className="ring3d" style={{ width: "100%", height: "100%", border: `2px solid ${C.gold}`, borderRadius: "50%", position: "absolute" }} />
+          <div className="ring3d-rev" style={{ width: "72%", height: "72%", border: `1.5px solid ${C.teal}`, borderRadius: "50%", position: "absolute", top: "14%", left: "14%" }} />
+          <div className="ring3d" style={{ width: "45%", height: "45%", border: `1px solid ${C.gold}`, borderRadius: "50%", position: "absolute", top: "27.5%", left: "27.5%", animationDuration: "12s" }} />
+        </div>
+        <Particles />
 
-        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "130px 64px 100px", display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 80, alignItems: "center" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "130px 64px 100px", display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 80, alignItems: "center", position: "relative", zIndex: 2 }}>
           {/* Left */}
           <div>
             <Reveal>
               <Eyebrow>Puducherry's Premier Automation Company</Eyebrow>
-              <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(3rem, 5.5vw, 5rem)", color: C.platinum, lineHeight: 1.05, letterSpacing: "-0.03em", marginBottom: 28 }}>
+              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(3.2rem, 5.8vw, 5.5rem)", color: C.platinum, lineHeight: 1.02, letterSpacing: "-0.02em", marginBottom: 28, animation: "text-glow 4s ease-in-out infinite" }}>
                 Engineering<br />
-                <span style={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})` }}>Intelligent</span><br />
+                <span style={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", backgroundImage: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, ${C.gold} 100%)`, backgroundSize: "200% auto", animation: "shimmer 3s linear infinite" }}>Intelligent</span><br />
                 Automation
               </h1>
-              <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.1rem", color: C.silver, lineHeight: 1.9, maxWidth: 520, marginBottom: 44 }}>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.1rem", color: C.silver, lineHeight: 1.9, maxWidth: 520, marginBottom: 44 }}>
                 Iyonex delivers enterprise-grade home and industrial automation, electrical engineering, and custom product development — backed by our industry-leading <strong style={{ color: C.platinum }}>5-Year Service Contract</strong> and <strong style={{ color: C.platinum }}>2-Year Product Warranty</strong>.
               </p>
               <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 56 }}>
@@ -533,62 +594,76 @@ function HomePage({ setPage }) {
               <div style={{ display: "flex", gap: 0, paddingTop: 36, borderTop: `1px solid ${C.border}` }}>
                 {[["500+", "Projects Delivered"], ["14+", "Cities Served"], ["99%", "Client Retention"], ["6+", "Years Expertise"]].map(([n, l], i) => (
                   <div key={l} style={{ flex: 1, paddingRight: 24, borderRight: i < 3 ? `1px solid ${C.border}` : "none", marginRight: i < 3 ? 24 : 0 }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.1rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{n}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: C.silver, letterSpacing: "0.5px", marginTop: 4 }}>{l}</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.3rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{n}</div>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.72rem", color: C.silver, letterSpacing: "0.5px", marginTop: 4 }}>{l}</div>
                   </div>
                 ))}
               </div>
             </Reveal>
           </div>
 
-          {/* Right — Dashboard */}
+          {/* Right — Dashboard with floating badges */}
           <Reveal direction="left" delay={0.25}>
-            <Card3D intensity={12}>
-              <div style={{ background: "rgba(13,17,24,0.8)", border: `1px solid ${C.border}`, borderRadius: 12, padding: 28, backdropFilter: "blur(20px)", position: "relative", overflow: "hidden" }}>
-                {/* Corner marks */}
-                <CornerMark top={12} left={12} />
-                <CornerMark top={12} right={12} />
-                <CornerMark bottom={12} left={12} />
-                <CornerMark bottom={12} right={12} />
-                {/* Gold top glow */}
-                <div style={{ position: "absolute", top: 0, left: "20%", right: "20%", height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}, transparent)` }} />
+            <div style={{ position: "relative" }}>
+              {/* Floating 3D badges */}
+              <FloatBadge icon="⚡" label="Live Energy" value="18.4 kWh" color={C.gold} style={{ top: -32, right: -24, animationDelay: "0s", zIndex: 10 }} />
+              <FloatBadge icon="🔒" label="Security" value="Armed" color={C.emerald} style={{ bottom: 40, left: -36, animationDelay: "1.8s", zIndex: 10 }} />
+              <FloatBadge icon="🌡️" label="Climate" value="23°C" color={C.teal} style={{ top: "45%", right: -40, animationDelay: "1s", zIndex: 10 }} />
 
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` }}>
-                  <div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 4 }}>Iyonex Control Centre</div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "1rem", color: C.platinum }}>Smart Home Dashboard</div>
-                  </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <div style={{ width: 7, height: 7, background: C.emerald, borderRadius: "50%", boxShadow: `0 0 10px ${C.emerald}` }} />
-                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: C.emerald }}>Live</span>
-                  </div>
-                </div>
+              <Card3D intensity={12}>
+                <div style={{ background: "rgba(8,12,20,0.85)", border: `1px solid ${C.border}`, borderRadius: 16, padding: 28, backdropFilter: "blur(24px)", position: "relative", overflow: "hidden", boxShadow: `0 32px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06)` }}>
+                  {/* Holographic sheen */}
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1px", background: `linear-gradient(90deg, transparent, ${C.teal}80, ${C.gold}80, transparent)` }} />
+                  {/* Corner marks */}
+                  <CornerMark top={12} left={12} />
+                  <CornerMark top={12} right={12} />
+                  <CornerMark bottom={12} left={12} />
+                  <CornerMark bottom={12} right={12} />
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
-                  {[["Lighting", "12 Zones Active", C.gold], ["Climate", "23°C — Auto", C.teal], ["Security", "Armed", C.emerald], ["Energy", "18.4 kWh Today", C.goldLight]].map(([k, v, col]) => (
-                    <div key={k} style={{ background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "14px 16px", border: `1px solid ${C.border}` }}>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 6 }}>{k}</div>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.88rem", color: col }}>{v}</div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 22, paddingBottom: 18, borderBottom: `1px solid ${C.border}` }}>
+                    <div>
+                      <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 4 }}>Iyonex Control Centre</div>
+                      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.1rem", color: C.platinum }}>Smart Home Dashboard</div>
                     </div>
-                  ))}
-                </div>
-
-                <div style={{ background: C.tealGlow, border: C.borderTeal, borderRadius: 8, padding: "11px 14px", marginBottom: 14 }}>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.teal }}>✦ All 24 devices operating nominally</div>
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-                  <div style={{ background: "rgba(0,182,122,0.08)", border: "1px solid rgba(0,182,122,0.2)", borderRadius: 8, padding: "14px", textAlign: "center" }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.2rem", color: C.emerald }}>5 Years</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>Free Service</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                      <div style={{ width: 8, height: 8, background: C.emerald, borderRadius: "50%", boxShadow: `0 0 12px ${C.emerald}, 0 0 24px ${C.emerald}40` }} />
+                      <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.68rem", color: C.emerald }}>Live</span>
+                    </div>
                   </div>
-                  <div style={{ background: C.goldGlow, border: C.borderGold, borderRadius: 8, padding: "14px", textAlign: "center" }}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.2rem", color: C.gold }}>2 Years</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>Warranty</div>
+
+                  {/* Real image inside dashboard */}
+                  <div style={{ borderRadius: 10, overflow: "hidden", marginBottom: 14, position: "relative", height: 140 }}>
+                    <img src={IMGS.smartroom} alt="Smart Home" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,20,0.85) 0%, transparent 60%)" }} />
+                    <div style={{ position: "absolute", bottom: 12, left: 14, fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: C.platinum }}>12 Active Zones · All Online</div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 14 }}>
+                    {[["Lighting", "12 Zones Active", C.gold], ["Climate", "23°C — Auto", C.teal], ["Security", "Armed", C.emerald], ["Energy", "18.4 kWh Today", C.goldLight]].map(([k, v, col]) => (
+                      <div key={k} style={{ background: "rgba(255,255,255,0.03)", borderRadius: 8, padding: "14px 16px", border: `1px solid ${C.border}`, backdropFilter: "blur(8px)" }}>
+                        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginBottom: 6 }}>{k}</div>
+                        <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.88rem", color: col }}>{v}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div style={{ background: C.tealGlow, border: C.borderTeal, borderRadius: 8, padding: "11px 14px", marginBottom: 14 }}>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.teal }}>✦ All 24 devices operating nominally</div>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                    <div style={{ background: "rgba(0,182,122,0.08)", border: "1px solid rgba(0,182,122,0.2)", borderRadius: 8, padding: "14px", textAlign: "center" }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.3rem", color: C.emerald }}>5 Years</div>
+                      <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>Free Service</div>
+                    </div>
+                    <div style={{ background: C.goldGlow, border: C.borderGold, borderRadius: 8, padding: "14px", textAlign: "center" }}>
+                      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.3rem", color: C.gold }}>2 Years</div>
+                      <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase", marginTop: 3 }}>Warranty</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Card3D>
+              </Card3D>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -600,8 +675,8 @@ function HomePage({ setPage }) {
             <div key={t} style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ width: 4, height: 4, background: C.heroNav, borderRadius: "50%", opacity: 0.6 }} />
               <div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.78rem", color: C.heroNav, letterSpacing: "0.5px" }}>{t}</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", color: "rgba(8,11,15,0.65)" }}>{d}</div>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.78rem", color: C.heroNav, letterSpacing: "0.5px" }}>{t}</div>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: "rgba(8,11,15,0.65)" }}>{d}</div>
               </div>
             </div>
           ))}
@@ -628,9 +703,9 @@ function HomePage({ setPage }) {
                     onMouseEnter={e => e.currentTarget.style.borderColor = C.borderGold}
                     onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${C.gold}40, transparent)` }} />
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.8rem", color: "rgba(201,168,76,0.1)", lineHeight: 1, marginBottom: 20, letterSpacing: "-0.02em" }}>{num}</div>
-                    <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.95rem", color: C.platinum, marginBottom: 12, letterSpacing: "0.3px" }}>{title}</h3>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: C.silver, lineHeight: 1.8 }}>{desc}</p>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.8rem", color: "rgba(201,168,76,0.1)", lineHeight: 1, marginBottom: 20, letterSpacing: "-0.02em" }}>{num}</div>
+                    <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.95rem", color: C.platinum, marginBottom: 12, letterSpacing: "0.3px" }}>{title}</h3>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: C.silver, lineHeight: 1.8 }}>{desc}</p>
                   </div>
                 </Card3D>
               </Reveal>
@@ -650,13 +725,13 @@ function HomePage({ setPage }) {
                 <div style={{ padding: "40px 32px", background: C.cardNavy, borderRight: (i % 3 !== 2) ? `1px solid ${C.border}` : "none", borderBottom: i < 3 ? `1px solid ${C.border}` : "none", transition: "background 0.35s, border-color 0.35s", cursor: "pointer" }}
                   onMouseEnter={e => e.currentTarget.style.background = C.cardSlate}
                   onMouseLeave={e => e.currentTarget.style.background = C.cardNavy}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.5rem", color: `${C.gold}18`, lineHeight: 1, marginBottom: 20 }}>{s.icon}</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 10 }}>{s.sub}</div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "1.15rem", color: C.platinum, marginBottom: 14 }}>{s.title}</h3>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.84rem", color: C.silver, lineHeight: 1.8 }}>{s.desc.substring(0, 110)}…</p>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.5rem", color: `${C.gold}18`, lineHeight: 1, marginBottom: 20 }}>{s.icon}</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 10 }}>{s.sub}</div>
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.15rem", color: C.platinum, marginBottom: 14 }}>{s.title}</h3>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.84rem", color: C.silver, lineHeight: 1.8 }}>{s.desc.substring(0, 110)}…</p>
                   <div style={{ marginTop: 20, display: "inline-flex", alignItems: "center", gap: 6 }}>
                     <div style={{ width: 20, height: 1, background: C.gold }} />
-                    <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", color: C.gold, letterSpacing: "1.5px", textTransform: "uppercase" }}>Learn more</span>
+                    <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: C.gold, letterSpacing: "1.5px", textTransform: "uppercase" }}>Learn more</span>
                   </div>
                 </div>
               </Reveal>
@@ -678,14 +753,14 @@ function HomePage({ setPage }) {
                 <img src={IMGS.homeAuto} alt="Smart home" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease" }}
                   onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
                   onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,11,15,0.92) 0%, transparent 55%)" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,20,0.95) 0%, transparent 55%)" }} />
                 {/* Gold corner accent */}
                 <CornerMark top={16} left={16} color={C.gold} size={20} />
                 <CornerMark bottom={16} right={16} color={C.gold} size={20} />
                 <div style={{ position: "absolute", bottom: 28, left: 28 }}>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 8 }}>Residential</div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.5rem", color: C.platinum, lineHeight: 1.2 }}>Smart Home<br />Automation</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.8rem", color: C.silver, marginTop: 8 }}>Complete smart living ecosystems</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 8 }}>Residential</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.5rem", color: C.platinum, lineHeight: 1.2 }}>Smart Home<br />Automation</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8rem", color: C.silver, marginTop: 8 }}>Complete smart living ecosystems</div>
                 </div>
               </div>
             </Card3D>
@@ -698,10 +773,28 @@ function HomePage({ setPage }) {
                   <img src={src} alt={title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease" }}
                     onMouseEnter={e => e.target.style.transform = "scale(1.08)"}
                     onMouseLeave={e => e.target.style.transform = "scale(1)"} />
-                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,11,15,0.88) 0%, transparent 60%)" }} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,20,0.88) 0%, transparent 60%)" }} />
                   <div style={{ position: "absolute", bottom: 20, left: 20 }}>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.58rem", color: col, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 5 }}>{cat}</div>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "1rem", color: C.platinum }}>{title}</div>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.58rem", color: col, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 5 }}>{cat}</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1rem", color: C.platinum }}>{title}</div>
+                  </div>
+                </div>
+              </Card3D>
+            ))}
+          </div>
+
+          {/* Extra 3 image strip below */}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 16 }}>
+            {[[IMGS.plc, "PLC & SCADA Control", "Industrial Automation"], [IMGS.villa, "Smart Luxury Villas", "Residential Premium"], [IMGS.energy, "Solar & Energy Systems", "Renewable Energy"]].map(([src, title, cat]) => (
+              <Card3D key={title} intensity={10}>
+                <div style={{ height: 200, borderRadius: 10, overflow: "hidden", position: "relative" }}>
+                  <img src={src} alt={title} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s" }}
+                    onMouseEnter={e => e.target.style.transform = "scale(1.08)"}
+                    onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,20,0.9) 0%, rgba(5,10,20,0.1) 100%)" }} />
+                  <div style={{ position: "absolute", bottom: 18, left: 18 }}>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.58rem", color: C.teal, letterSpacing: "2px", textTransform: "uppercase", marginBottom: 4 }}>{cat}</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.05rem", color: C.platinum }}>{title}</div>
                   </div>
                 </div>
               </Card3D>
@@ -723,12 +816,12 @@ function HomePage({ setPage }) {
                     onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}>
                     <div style={{ background: C.cardNavy, padding: "28px 28px 24px", position: "relative" }}>
                       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, ${C.gold}, transparent)` }} />
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.6rem", color: C.teal, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 10 }}>{cs.label}</div>
-                      <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "1.1rem", color: C.platinum, marginBottom: 10 }}>{cs.title}</h3>
-                      <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.5rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{cs.result}</div>
+                      <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.6rem", color: C.teal, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 10 }}>{cs.label}</div>
+                      <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.1rem", color: C.platinum, marginBottom: 10 }}>{cs.title}</h3>
+                      <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.5rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{cs.result}</div>
                     </div>
                     <div style={{ padding: "22px 28px", background: C.white }}>
-                      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: "#64748B", lineHeight: 1.8 }}>{cs.detail}</p>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: "#64748B", lineHeight: 1.8 }}>{cs.detail}</p>
                     </div>
                   </div>
                 </Card3D>
@@ -748,17 +841,17 @@ function HomePage({ setPage }) {
               <div style={{ background: C.cardBurg, border: `1px solid ${C.border}`, borderRadius: 12, padding: "56px 60px", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 0, left: "15%", right: "15%", height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}60, transparent)` }} />
                 {/* Giant decorative quote */}
-                <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "8rem", color: `${C.gold}10`, lineHeight: 0.8, marginBottom: 8, userSelect: "none" }}>"</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "8rem", color: `${C.gold}10`, lineHeight: 0.8, marginBottom: 8, userSelect: "none" }}>"</div>
                 <div style={{ display: "flex", gap: 3, marginBottom: 24, marginTop: -16 }}>
                   {Array(TESTIMONIALS[ti].rating).fill(0).map((_, k) => (
                     <svg key={k} width="16" height="16" viewBox="0 0 24 24" fill={C.gold}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                   ))}
                 </div>
-                <p style={{ fontFamily: "'Playfair Display', serif", fontSize: "1.12rem", color: C.platinum, lineHeight: 1.9, fontStyle: "italic", marginBottom: 36 }}>{TESTIMONIALS[ti].text}</p>
+                <p style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.12rem", color: C.platinum, lineHeight: 1.9, fontStyle: "italic", marginBottom: 36 }}>{TESTIMONIALS[ti].text}</p>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                   <div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, color: C.platinum, fontSize: "0.95rem" }}>{TESTIMONIALS[ti].name}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.silver, marginTop: 3 }}>{TESTIMONIALS[ti].role} — {TESTIMONIALS[ti].company}</div>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, color: C.platinum, fontSize: "0.95rem" }}>{TESTIMONIALS[ti].name}</div>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.silver, marginTop: 3 }}>{TESTIMONIALS[ti].role} — {TESTIMONIALS[ti].company}</div>
                   </div>
                   <div style={{ display: "flex", gap: 8 }}>
                     {TESTIMONIALS.map((_, k) => (
@@ -783,8 +876,8 @@ function HomePage({ setPage }) {
                   onMouseEnter={e => { e.currentTarget.style.borderColor = C.borderGold; e.currentTarget.style.background = C.cardSlate; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = C.border; e.currentTarget.style.background = C.cardNavy; }}>
                   <div style={{ width: 24, height: 1, background: C.gold, marginBottom: 14 }} />
-                  <h4 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.88rem", color: C.platinum, marginBottom: 7 }}>{title}</h4>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.76rem", color: C.silver, lineHeight: 1.65 }}>{desc}</p>
+                  <h4 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.88rem", color: C.platinum, marginBottom: 7 }}>{title}</h4>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.76rem", color: C.silver, lineHeight: 1.65 }}>{desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -800,11 +893,11 @@ function HomePage({ setPage }) {
           <div style={{ maxWidth: 760, margin: "0 auto", textAlign: "center", position: "relative", zIndex: 1 }}>
             <Eyebrow>Begin Your Project</Eyebrow>
             <GoldLine width={80} center />
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.2rem, 4vw, 3.4rem)", color: C.platinum, lineHeight: 1.15, marginBottom: 24 }}>Ready to Engineer a<br /><span style={{ backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Smarter Future?</span></h2>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, marginBottom: 48, lineHeight: 1.85 }}>Contact Iyonex for a complimentary site assessment and no-obligation project proposal. We respond within 2 business hours.</p>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.2rem, 4vw, 3.4rem)", color: C.platinum, lineHeight: 1.15, marginBottom: 24 }}>Ready to Engineer a<br /><span style={{ backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Smarter Future?</span></h2>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, marginBottom: 48, lineHeight: 1.85 }}>Contact Iyonex for a complimentary site assessment and no-obligation project proposal. We respond within 2 business hours.</p>
             <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
               <GoldBtn onClick={() => setPage("Contact")}>Schedule Consultation</GoldBtn>
-              <a href={WA} target="_blank" rel="noreferrer" style={{ background: "#25D366", color: "#fff", padding: "15px 32px", borderRadius: 2, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.88rem", textDecoration: "none", letterSpacing: "1px", textTransform: "uppercase", display: "inline-flex", alignItems: "center", gap: 8 }}>
+              <a href={WA} target="_blank" rel="noreferrer" style={{ background: "#25D366", color: "#fff", padding: "15px 32px", borderRadius: 2, fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.88rem", textDecoration: "none", letterSpacing: "1px", textTransform: "uppercase", display: "inline-flex", alignItems: "center", gap: 8 }}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.54 5.877L.057 23.943l6.204-1.626A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.5-5.228-1.375l-.374-.222-3.683.965.982-3.593-.244-.389A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
                 WhatsApp
               </a>
@@ -822,14 +915,15 @@ function HomePage({ setPage }) {
 function AboutPage({ setPage }) {
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "65vh", padding: "100px 64px 80px", display: "flex", alignItems: "center", background: `linear-gradient(145deg, ${C.royalBlue} 0%, ${C.heroNav} 60%, rgba(0,200,180,0.08) 100%)`, position: "relative", overflow: "hidden" }}>
+      <section style={{ minHeight: "70vh", padding: "100px 64px 80px", display: "flex", alignItems: "center", background: `linear-gradient(145deg, rgba(5,10,20,0.96) 0%, rgba(8,16,32,0.88) 60%, rgba(0,100,90,0.1) 100%), url(${IMGS.factory}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
-        <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
+        <Particles />
+        <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1, width: "100%" }}>
           <Reveal>
             <Eyebrow>About Iyonex</Eyebrow>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.8rem, 5vw, 4.5rem)", color: C.platinum, lineHeight: 1.08, maxWidth: 780, letterSpacing: "-0.03em" }}>Born in Puducherry.<br />Built to Lead India's<br /><span style={{ backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>Automation Industry.</span></h1>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, lineHeight: 1.9, maxWidth: 640, marginTop: 28 }}>Iyonex was founded on a conviction that intelligent automation — the kind deployed by global corporations — should be accessible to every Indian home and factory. That conviction remains the foundation of everything we do.</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.8rem, 5vw, 4.8rem)", color: C.platinum, lineHeight: 1.06, maxWidth: 800, letterSpacing: "-0.02em" }}>Born in Puducherry.<br />Built to Lead India's<br /><span style={{ backgroundImage: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, ${C.gold} 100%)`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", backgroundSize: "200% auto", animation: "shimmer 3s linear infinite" }}>Automation Industry.</span></h1>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, lineHeight: 1.9, maxWidth: 640, marginTop: 28 }}>Iyonex was founded on a conviction that intelligent automation — the kind deployed by global corporations — should be accessible to every Indian home and factory. That conviction remains the foundation of everything we do.</p>
           </Reveal>
         </div>
       </section>
@@ -838,9 +932,9 @@ function AboutPage({ setPage }) {
         <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}>
           <Reveal>
             <Eyebrow>Our Story</Eyebrow>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.4rem", color: C.darkText, lineHeight: 1.15, marginBottom: 28 }}>From a Lawspet Workshop to South India's Trusted Partner</h2>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.4rem", color: C.darkText, lineHeight: 1.15, marginBottom: 28 }}>From a Lawspet Workshop to South India's Trusted Partner</h2>
             {["Iyonex began as a small electrical contracting business in Lawspet, Puducherry. Our founder, a qualified electrical engineer, observed that homeowners and factory operators in the region were contending with high energy expenditure, manual operational processes, and inadequate security infrastructure.","Applying engineering principles to practical IoT deployment, he developed a comprehensive smart home system and commissioned it in his own residence. The response was immediate and enthusiastic. Iyonex was formally incorporated and has grown consistently since.","Today, Iyonex operates a multidisciplinary engineering team, a dedicated R&D and product development facility, and a portfolio of over 500 delivered projects across residential, industrial, and commercial sectors."].map((p, i) => (
-              <p key={i} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: "#64748B", lineHeight: 1.9, marginBottom: 18 }}>{p}</p>
+              <p key={i} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.95rem", color: "#64748B", lineHeight: 1.9, marginBottom: 18 }}>{p}</p>
             ))}
           </Reveal>
           <Reveal delay={0.15}>
@@ -851,16 +945,16 @@ function AboutPage({ setPage }) {
                 <CornerMark top={14} left={14} color={C.gold} size={18} />
                 <CornerMark bottom={14} right={14} color={C.gold} size={18} />
                 <div style={{ position: "absolute", bottom: 20, left: 22 }}>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase" }}>Est. 2018</div>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.1rem", color: C.platinum }}>Puducherry, South India</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase" }}>Est. 2018</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.1rem", color: C.platinum }}>Puducherry, South India</div>
                 </div>
               </div>
             </Card3D>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
               {[["2018","Founded in Lawspet, Puducherry",C.gold],["2019","First industrial project — Villupuram",C.teal],["2021","Mobile platform launched — iOS & Android",C.emerald],["2022","Chennai expansion. 200+ clients",C.gold],["2023","R&D product division established",C.teal],["2025","500+ projects across 14 cities",C.gold]].map(([yr, desc, col]) => (
                 <div key={yr} style={{ background: C.white, border: "1px solid #E2E8F0", borderRadius: 8, padding: "18px 16px" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, color: col, fontSize: "1.25rem", marginBottom: 7 }}>{yr}</div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.8rem", color: "#64748B", lineHeight: 1.6 }}>{desc}</p>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: col, fontSize: "1.25rem", marginBottom: 7 }}>{yr}</div>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8rem", color: "#64748B", lineHeight: 1.6 }}>{desc}</p>
                 </div>
               ))}
             </div>
@@ -868,14 +962,14 @@ function AboutPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "80px 64px", background: `linear-gradient(90deg, ${C.royalBlue}, ${C.heroNav}, ${C.royalBlue})`, position: "relative", overflow: "hidden" }}>
+      <section style={{ padding: "80px 64px", background: `linear-gradient(90deg, rgba(5,10,20,0.95), rgba(8,16,32,0.9), rgba(5,10,20,0.95)), url(${IMGS.team}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}60, transparent)` }} />
         <Reveal>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 24, textAlign: "center" }}>
             {[["500+","Projects"],["50+","Industrial Clients"],["14+","Cities"],["6+","Years"],["12","Engineers"],["5 Yrs","Free Service"],["2 Yrs","Warranty"],["24/7","Support"]].map(([n, l]) => (
               <div key={l}>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.4rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{n}</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", color: C.silver, letterSpacing: "1.5px", marginTop: 6, textTransform: "uppercase" }}>{l}</div>
+                <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.4rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{n}</div>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: C.silver, letterSpacing: "1.5px", marginTop: 6, textTransform: "uppercase" }}>{l}</div>
               </div>
             ))}
           </div>
@@ -893,8 +987,8 @@ function AboutPage({ setPage }) {
                   <div style={{ width: 32, height: 32, borderRadius: 6, background: `${col}15`, border: `1px solid ${col}40`, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 20 }}>
                     <div style={{ width: 10, height: 10, borderRadius: "50%", background: col }} />
                   </div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.4rem", color: C.platinum, marginBottom: 14 }}>{title}</h3>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: C.silver, lineHeight: 1.85 }}>{text}</p>
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.4rem", color: C.platinum, marginBottom: 14 }}>{title}</h3>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9rem", color: C.silver, lineHeight: 1.85 }}>{text}</p>
                 </div>
               </Reveal>
             ))}
@@ -912,9 +1006,9 @@ function AboutPage({ setPage }) {
                   onMouseEnter={e => e.currentTarget.style.borderColor = C.borderGold}
                   onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
                   <div style={{ width: 44, height: 44, background: `${col}15`, border: `1px solid ${col}35`, borderRadius: 8, marginBottom: 18 }} />
-                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.93rem", color: C.platinum, marginBottom: 4 }}>{role}</h3>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: col, letterSpacing: "0.5px", marginBottom: 12, fontWeight: 600 }}>{qual}</div>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.84rem", color: C.silver, lineHeight: 1.75 }}>{desc}</p>
+                  <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.93rem", color: C.platinum, marginBottom: 4 }}>{role}</h3>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.72rem", color: col, letterSpacing: "0.5px", marginBottom: 12, fontWeight: 600 }}>{qual}</div>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.84rem", color: C.silver, lineHeight: 1.75 }}>{desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -932,8 +1026,8 @@ function AboutPage({ setPage }) {
                   <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 8, padding: "26px 36px", textAlign: "center", minWidth: 160, transition: "border-color 0.3s" }}
                     onMouseEnter={e => e.currentTarget.style.borderColor = C.borderGold}
                     onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
-                    <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.2rem", color: C.gold, marginBottom: 6 }}>{cert.code}</div>
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.68rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase" }}>{cert.label}</div>
+                    <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.2rem", color: C.gold, marginBottom: 6 }}>{cert.code}</div>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.68rem", color: C.silver, letterSpacing: "1.5px", textTransform: "uppercase" }}>{cert.label}</div>
                   </div>
                 </Card3D>
               </Reveal>
@@ -951,77 +1045,77 @@ function AboutPage({ setPage }) {
 function ServicesPage({ setPage }) {
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "55vh", display: "flex", alignItems: "center", padding: "100px 64px 80px", background: `linear-gradient(145deg, ${C.royalBlue} 0%, ${C.heroNav} 100%)`, position: "relative", overflow: "hidden" }}>
+      <section style={{ minHeight: "55vh", display: "flex", alignItems: "center", padding: "100px 64px 80px", background: `linear-gradient(145deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0.88) 100%), url(${IMGS.industrial}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
             <Eyebrow>Our Services</Eyebrow>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 20, lineHeight: 1.1, letterSpacing: "-0.03em" }}>Complete Automation Engineering</h1>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 580, lineHeight: 1.85, marginBottom: 28 }}>A single, accountable engineering partner for every automation requirement — residential, industrial, commercial, and custom product development.</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 20, lineHeight: 1.1, letterSpacing: "-0.03em" }}>Complete Automation Engineering</h1>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 580, lineHeight: 1.85, marginBottom: 28 }}>A single, accountable engineering partner for every automation requirement — residential, industrial, commercial, and custom product development.</p>
             <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <div style={{ background: "rgba(0,182,122,0.1)", border: "1px solid rgba(0,182,122,0.3)", borderRadius: 3, padding: "9px 18px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.emerald, fontWeight: 600, letterSpacing: "0.5px" }}>5-Year Free Service on All Projects</div>
-              <div style={{ background: C.goldGlow, border: C.borderGold, borderRadius: 3, padding: "9px 18px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.gold, fontWeight: 600, letterSpacing: "0.5px" }}>2-Year Product Warranty Standard</div>
+              <div style={{ background: "rgba(0,182,122,0.1)", border: "1px solid rgba(0,182,122,0.3)", borderRadius: 3, padding: "9px 18px", fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.emerald, fontWeight: 600, letterSpacing: "0.5px" }}>5-Year Free Service on All Projects</div>
+              <div style={{ background: C.goldGlow, border: C.borderGold, borderRadius: 3, padding: "9px 18px", fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.gold, fontWeight: 600, letterSpacing: "0.5px" }}>2-Year Product Warranty Standard</div>
             </div>
           </Reveal>
         </div>
       </section>
 
-      {SERVICES.map((s, i) => (
-        <section key={s.icon} style={{ padding: "80px 64px", background: i % 2 === 0 ? C.navy : C.emeraldBg, borderBottom: `1px solid ${C.border}` }}>
-          <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 56, alignItems: "center" }}>
-            {i % 2 !== 0 && (
-              <Reveal direction="right" delay={0.1}>
-                <Card3D intensity={10}>
-                  <div style={{ borderRadius: 10, overflow: "hidden", height: 340, position: "relative" }}>
-                    <img src={SERVICE_IMGS[i]} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,11,15,0.8) 0%, transparent 55%)" }} />
-                    <CornerMark top={12} left={12} color={C.gold} size={16} />
-                    <CornerMark bottom={12} right={12} color={C.gold} size={16} />
-                    <div style={{ position: "absolute", bottom: 18, left: 18 }}>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.58rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase" }}>{s.icon} — {s.sub}</div>
-                    </div>
-                  </div>
-                </Card3D>
-              </Reveal>
-            )}
-            <Reveal>
-              <div>
-                <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "4rem", color: `${C.gold}18`, lineHeight: 1, marginBottom: 12 }}>{s.icon}</div>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.65rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 10 }}>{s.sub}</div>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.1rem", color: C.platinum, marginBottom: 18, lineHeight: 1.15, letterSpacing: "-0.02em" }}>{s.title}</h2>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.95rem", color: C.silver, lineHeight: 1.9, marginBottom: 28 }}>{s.desc}</p>
-                <GoldBtn onClick={() => setPage("Contact")}>Request a Quote</GoldBtn>
+      {SERVICES.map((s, i) => {
+        const isEven = i % 2 === 0;
+        const bg = isEven ? C.navy : C.emeraldBg;
+        const accentCol = isEven ? C.teal : C.gold;
+
+        const ImageCol = (
+          <Reveal direction={isEven ? "left" : "right"} delay={0.15}>
+            <Card3D intensity={10}>
+              <div style={{ borderRadius: 12, overflow: "hidden", height: 380, position: "relative" }}>
+                <img
+                  src={SERVICE_IMGS[i]}
+                  alt={s.title}
+                  style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease" }}
+                  onMouseEnter={e => e.target.style.transform = "scale(1.06)"}
+                  onMouseLeave={e => e.target.style.transform = "scale(1)"}
+                />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,20,0.85) 0%, transparent 55%)" }} />
+                <CornerMark top={14} left={14} color={C.gold} size={18} />
+                <CornerMark bottom={14} right={14} color={C.gold} size={18} />
+                <div style={{ position: "absolute", bottom: 20, left: 22 }}>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.58rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 5 }}>{s.sub}</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.1rem", color: C.platinum }}>{s.title}</div>
+                </div>
               </div>
-            </Reveal>
-            <Reveal direction={i % 2 === 0 ? "left" : "right"} delay={0.1}>
-              {i % 2 === 0 ? (
-                <Card3D intensity={10}>
-                  <div style={{ borderRadius: 10, overflow: "hidden", height: 340, position: "relative" }}>
-                    <img src={SERVICE_IMGS[i]} alt={s.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                    <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(8,11,15,0.8) 0%, transparent 55%)" }} />
-                    <CornerMark top={12} left={12} color={C.gold} size={16} />
-                    <CornerMark bottom={12} right={12} color={C.gold} size={16} />
-                  </div>
-                </Card3D>
-              ) : (
-                <div style={{ background: C.cardNavy, borderRadius: 8, padding: "36px 32px", border: `1px solid ${C.border}`, position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.5, background: `linear-gradient(90deg, ${C.teal}, transparent)` }} />
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.65rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 20 }}>Scope of Work</div>
+            </Card3D>
+          </Reveal>
+        );
+
+        const TextCol = (
+          <Reveal direction={isEven ? "right" : "left"} delay={0}>
+            <div>
+              <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "5rem", color: `${C.gold}12`, lineHeight: 1, marginBottom: 8, letterSpacing: "-0.04em" }}>{s.icon}</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.65rem", color: accentCol, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 12 }}>{s.sub}</div>
+              <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.3rem", color: C.platinum, marginBottom: 18, lineHeight: 1.12, letterSpacing: "-0.02em" }}>{s.title}</h2>
+              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.95rem", color: C.silver, lineHeight: 1.9, marginBottom: 28 }}>{s.desc}</p>
+              <div style={{ background: isEven ? "rgba(15,28,53,0.8)" : "rgba(10,25,20,0.8)", borderRadius: 8, padding: "24px 28px", border: `1px solid ${C.border}`, marginBottom: 32, position: "relative", overflow: "hidden" }}>
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "1.5px", background: `linear-gradient(90deg, ${accentCol}, transparent)` }} />
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: accentCol, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 16 }}>Scope of Work</div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "6px 16px" }}>
                   {s.points.map(pt => <CheckItem key={pt} text={pt} light />)}
                 </div>
-              )}
-              {i % 2 === 0 && (
-                <div style={{ background: C.cardNavy, borderRadius: 8, padding: "36px 32px", border: `1px solid ${C.border}`, position: "relative", overflow: "hidden", marginTop: 0 }}>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.5, background: `linear-gradient(90deg, ${C.teal}, transparent)` }} />
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.65rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 20 }}>Scope of Work</div>
-                  {s.points.map(pt => <CheckItem key={pt} text={pt} light />)}
-                </div>
-              )}
-            </Reveal>
-          </div>
-        </section>
-      ))}
+              </div>
+              <GoldBtn onClick={() => setPage("Contact")}>Request a Quote</GoldBtn>
+            </div>
+          </Reveal>
+        );
+
+        return (
+          <section key={s.icon} style={{ padding: "80px 64px", background: bg, borderBottom: `1px solid ${C.border}` }}>
+            <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
+              {isEven ? <>{TextCol}{ImageCol}</> : <>{ImageCol}{TextCol}</>}
+            </div>
+          </section>
+        );
+      })}
 
       <section style={{ padding: "120px 64px", background: "linear-gradient(145deg, #0D1830 0%, #0F1E38 50%, #091424 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
@@ -1031,10 +1125,10 @@ function ServicesPage({ setPage }) {
               <Reveal key={num} delay={i * 0.09}>
                 <div style={{ textAlign: "center", padding: "0 8px" }}>
                   <div style={{ width: 56, height: 56, borderRadius: "50%", border: `1px solid ${C.borderGold}`, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", background: C.goldGlow }}>
-                    <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.1rem", color: C.gold }}>{num}</span>
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.1rem", color: C.gold }}>{num}</span>
                   </div>
-                  <h3 style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, color: C.platinum, fontSize: "0.9rem", marginBottom: 10 }}>{title}</h3>
-                  <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.8rem", color: C.silver, lineHeight: 1.75 }}>{desc}</p>
+                  <h3 style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, color: C.platinum, fontSize: "0.9rem", marginBottom: 10 }}>{title}</h3>
+                  <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8rem", color: C.silver, lineHeight: 1.75 }}>{desc}</p>
                 </div>
               </Reveal>
             ))}
@@ -1054,14 +1148,14 @@ function ProductsPage({ setPage }) {
   const filtered = filter === "All" ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "45vh", display: "flex", alignItems: "center", padding: "100px 64px 72px", background: `linear-gradient(145deg, ${C.royalBlue}, ${C.heroNav})`, position: "relative", overflow: "hidden" }}>
+      <section style={{ minHeight: "45vh", display: "flex", alignItems: "center", padding: "100px 64px 72px", background: `linear-gradient(145deg, rgba(5,10,20,0.95), rgba(5,10,20,0.9)), url(${IMGS.product}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
             <Eyebrow>Product Portfolio</Eyebrow>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Smart Automation Hardware</h1>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Purpose-engineered hardware — all carrying our standard 2-year warranty and 5-year service contract.</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Smart Automation Hardware</h1>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Purpose-engineered hardware — all carrying our standard 2-year warranty and 5-year service contract.</p>
           </Reveal>
         </div>
       </section>
@@ -1072,7 +1166,7 @@ function ProductsPage({ setPage }) {
             {cats.map(cat => (
               <button key={cat} onClick={() => setFilter(cat)} style={{
                 padding: "14px 28px", background: "none", border: "none",
-                fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.82rem",
+                fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.82rem",
                 letterSpacing: "1.5px", textTransform: "uppercase",
                 color: filter === cat ? C.gold : C.silver, cursor: "pointer",
                 borderBottom: filter === cat ? `2px solid ${C.gold}` : "2px solid transparent",
@@ -1090,22 +1184,22 @@ function ProductsPage({ setPage }) {
                     <div style={{ background: C.cardSlate, padding: "24px 24px 20px", display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
                       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.5, background: `linear-gradient(90deg, ${C.gold}60, transparent)` }} />
                       <div>
-                        <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>{p.sku}</div>
-                        <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "1.05rem", color: C.platinum }}>{p.name}</h3>
+                        <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.silver, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>{p.sku}</div>
+                        <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", color: C.platinum }}>{p.name}</h3>
                       </div>
-                      <span style={{ background: C.tealGlow, border: C.borderTeal, borderRadius: 3, padding: "4px 10px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.65rem", color: C.teal, fontWeight: 600, whiteSpace: "nowrap" }}>{p.cat}</span>
+                      <span style={{ background: C.tealGlow, border: C.borderTeal, borderRadius: 3, padding: "4px 10px", fontFamily: "'Outfit', sans-serif", fontSize: "0.65rem", color: C.teal, fontWeight: 600, whiteSpace: "nowrap" }}>{p.cat}</span>
                     </div>
                     <div style={{ padding: "22px 24px" }}>
-                      <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: C.silver, lineHeight: 1.78, marginBottom: 16 }}>{p.desc}</p>
+                      <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: C.silver, lineHeight: 1.78, marginBottom: 16 }}>{p.desc}</p>
                       <div style={{ marginBottom: 20 }}>
                         {p.specs.map(sp => <CheckItem key={sp} text={sp} light />)}
                       </div>
                       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 16, borderTop: `1px solid ${C.border}` }}>
                         <div>
-                          <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.15rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{p.price}</div>
-                          <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.emerald, fontWeight: 600, marginTop: 2, letterSpacing: "0.5px" }}>2-Yr Warranty · 5-Yr Service</div>
+                          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.15rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{p.price}</div>
+                          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.emerald, fontWeight: 600, marginTop: 2, letterSpacing: "0.5px" }}>2-Yr Warranty · 5-Yr Service</div>
                         </div>
-                        <button onClick={() => setPage("Contact")} style={{ background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "9px 18px", borderRadius: 2, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.76rem", cursor: "pointer", letterSpacing: "1px", textTransform: "uppercase" }}>Enquire</button>
+                        <button onClick={() => setPage("Contact")} style={{ background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "9px 18px", borderRadius: 2, fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.76rem", cursor: "pointer", letterSpacing: "1px", textTransform: "uppercase" }}>Enquire</button>
                       </div>
                     </div>
                   </div>
@@ -1116,12 +1210,31 @@ function ProductsPage({ setPage }) {
         </div>
       </section>
 
+      {/* ── 3D PROJECT GALLERY ─────────────────────────────────────────────── */}
+      <section style={{ padding: "0 64px 80px", background: C.heroNav }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+            {[[IMGS.homeAuto, "Home"], [IMGS.plc, "Industrial"], [IMGS.solar, "Solar"], [IMGS.security, "Security"]].map(([src, label]) => (
+              <Card3D key={label} intensity={12}>
+                <div style={{ height: 220, borderRadius: 8, overflow: "hidden", position: "relative" }}>
+                  <img src={src} alt={label} style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.6s" }}
+                    onMouseEnter={e => e.target.style.transform = "scale(1.1)"}
+                    onMouseLeave={e => e.target.style.transform = "scale(1)"} />
+                  <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(5,10,20,0.9) 0%, transparent 50%)" }} />
+                  <div style={{ position: "absolute", bottom: 14, left: 14, fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: C.gold, letterSpacing: "2px", textTransform: "uppercase" }}>{label}</div>
+                </div>
+              </Card3D>
+            ))}
+          </div>
+        </div>
+      </section>
+
       <section style={{ padding: "80px 64px", background: `linear-gradient(135deg, ${C.royalBlue}, ${C.heroNav})`, textAlign: "center", position: "relative" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <Reveal>
           <Eyebrow>Custom Products</Eyebrow>
-          <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.2rem", color: C.platinum, marginBottom: 14 }}>Require Bespoke Hardware?</h2>
-          <p style={{ fontFamily: "'DM Sans', sans-serif", color: C.silver, marginBottom: 32, lineHeight: 1.8 }}>Our R&D team designs and manufactures bespoke automation hardware to exact client specifications.</p>
+          <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.2rem", color: C.platinum, marginBottom: 14 }}>Require Bespoke Hardware?</h2>
+          <p style={{ fontFamily: "'Outfit', sans-serif", color: C.silver, marginBottom: 32, lineHeight: 1.8 }}>Our R&D team designs and manufactures bespoke automation hardware to exact client specifications.</p>
           <GoldBtn onClick={() => setPage("Contact")}>Discuss Custom Requirements</GoldBtn>
         </Reveal>
       </section>
@@ -1135,14 +1248,14 @@ function ProductsPage({ setPage }) {
 function PricingPage({ setPage }) {
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "45vh", display: "flex", alignItems: "center", padding: "100px 64px 72px", background: `linear-gradient(145deg, ${C.royalBlue}, ${C.heroNav})`, position: "relative", overflow: "hidden" }}>
+      <section style={{ minHeight: "45vh", display: "flex", alignItems: "center", padding: "100px 64px 72px", background: `linear-gradient(145deg, rgba(5,10,20,0.95), rgba(5,10,20,0.9)), url(${IMGS.cctv}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
             <Eyebrow>Pricing</Eyebrow>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Transparent, Value-Driven Pricing</h1>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Every plan includes our industry-leading 5-year service contract and 2-year product warranty. No hidden fees.</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Transparent, Value-Driven Pricing</h1>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Every plan includes our industry-leading 5-year service contract and 2-year product warranty. No hidden fees.</p>
           </Reveal>
         </div>
       </section>
@@ -1155,23 +1268,23 @@ function PricingPage({ setPage }) {
                 <div style={{ background: p.popular ? C.cardBurg : C.cardSlate, border: p.popular ? `1px solid ${C.borderGold}` : `1px solid ${C.border}`, borderRadius: 10, padding: "40px 30px", minWidth: 246, maxWidth: 268, position: "relative", overflow: "hidden", flex: "1 1 246px", boxShadow: p.popular ? `0 20px 60px rgba(201,168,76,0.12)` : "none" }}>
                   {p.popular && <>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${C.gold}, transparent)` }} />
-                    <div style={{ position: "absolute", top: -1, left: "50%", transform: "translateX(-50%)", background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, padding: "5px 18px", borderRadius: "0 0 6px 6px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase" }}>Most Selected</div>
+                    <div style={{ position: "absolute", top: -1, left: "50%", transform: "translateX(-50%)", background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, padding: "5px 18px", borderRadius: "0 0 6px 6px", fontFamily: "'Outfit', sans-serif", fontSize: "0.65rem", fontWeight: 700, letterSpacing: "2px", textTransform: "uppercase" }}>Most Selected</div>
                   </>}
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.65rem", color: p.popular ? C.gold : C.silver, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 8, marginTop: p.popular ? 16 : 0 }}>{p.desc}</div>
-                  <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.2rem", color: C.platinum, marginBottom: 18 }}>{p.plan}</h3>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.65rem", color: p.popular ? C.gold : C.silver, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 8, marginTop: p.popular ? 16 : 0 }}>{p.desc}</div>
+                  <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.2rem", color: C.platinum, marginBottom: 18 }}>{p.plan}</h3>
                   <div style={{ marginBottom: 28 }}>
-                    <span style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "2.4rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{p.price}</span>
-                    {p.gst && <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.8rem", color: C.silver }}> {p.gst}</span>}
+                    <span style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.4rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{p.price}</span>
+                    {p.gst && <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8rem", color: C.silver }}> {p.gst}</span>}
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28 }}>
                     {p.features.map(f => (
                       <div key={f} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                         <div style={{ width: 5, height: 5, borderRadius: "50%", background: C.teal, flexShrink: 0, marginTop: 7 }} />
-                        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.8rem", color: C.silver, lineHeight: 1.5 }}>{f}</span>
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.8rem", color: C.silver, lineHeight: 1.5 }}>{f}</span>
                       </div>
                     ))}
                   </div>
-                  <button onClick={() => setPage("Contact")} style={{ width: "100%", background: p.popular ? `linear-gradient(135deg, ${C.gold}, ${C.goldDim})` : "transparent", color: p.popular ? C.heroNav : C.gold, border: p.popular ? "none" : `1px solid ${C.borderGold}`, padding: "13px", borderRadius: 3, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", letterSpacing: "1.5px", textTransform: "uppercase" }}>
+                  <button onClick={() => setPage("Contact")} style={{ width: "100%", background: p.popular ? `linear-gradient(135deg, ${C.gold}, ${C.goldDim})` : "transparent", color: p.popular ? C.heroNav : C.gold, border: p.popular ? "none" : `1px solid ${C.borderGold}`, padding: "13px", borderRadius: 3, fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.82rem", cursor: "pointer", letterSpacing: "1.5px", textTransform: "uppercase" }}>
                     {p.price === "Custom" ? "Request Proposal" : "Get Started"}
                   </button>
                 </div>
@@ -1186,15 +1299,15 @@ function PricingPage({ setPage }) {
           <Reveal><SectionTitle eyebrow="Competitive Comparison" title="Iyonex vs. The Industry" subtitle="A transparent comparison of the Iyonex service standard against typical automation providers." light center /></Reveal>
           <div style={{ border: `1px solid ${C.border}`, borderRadius: 10, overflow: "hidden" }}>
             <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", background: C.heroNav, borderBottom: `1px solid ${C.border}` }}>
-              <div style={{ padding: "18px 28px", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, color: C.silver, fontSize: "0.75rem", letterSpacing: "2px", textTransform: "uppercase" }}>Feature</div>
-              <div style={{ padding: "18px 28px", textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.82rem", color: C.gold, letterSpacing: "1px" }}>Iyonex</div>
-              <div style={{ padding: "18px 28px", textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontWeight: 600, color: "rgba(255,255,255,0.28)", fontSize: "0.78rem" }}>Competitors</div>
+              <div style={{ padding: "18px 28px", fontFamily: "'Outfit', sans-serif", fontWeight: 600, color: C.silver, fontSize: "0.75rem", letterSpacing: "2px", textTransform: "uppercase" }}>Feature</div>
+              <div style={{ padding: "18px 28px", textAlign: "center", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.82rem", color: C.gold, letterSpacing: "1px" }}>Iyonex</div>
+              <div style={{ padding: "18px 28px", textAlign: "center", fontFamily: "'Outfit', sans-serif", fontWeight: 600, color: "rgba(255,255,255,0.28)", fontSize: "0.78rem" }}>Competitors</div>
             </div>
             {[["Free Site Survey","Always Included","Often Chargeable"],["Service After Installation","5 Years — Complimentary","1 Year or Paid"],["Product Warranty","2 Full Years","6–12 Months"],["Licensed Engineering Team","IE Act Certified","Variable"],["Itemised Quotations","Standard Practice","Often Vague"],["Offline Operation Mode","Built-in Standard","Rarely Available"],["Alexa & Google Certified","All Products","Select Models"],["Custom Product Development","In-House R&D","Not Available"],["Multi-Platform App","iOS, Android & Web","App Only"],["Emergency Support","24/7 Availability","Business Hours"]].map(([feat, iy, comp], i) => (
               <div key={feat} style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr", background: i % 2 === 0 ? C.cardNavy : C.cardSlate, borderBottom: `1px solid ${C.border}` }}>
-                <div style={{ padding: "14px 28px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: C.platinum }}>{feat}</div>
-                <div style={{ padding: "14px 28px", textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", color: C.emerald, fontWeight: 600 }}>{iy}</div>
-                <div style={{ padding: "14px 28px", textAlign: "center", fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", color: C.silver }}>{comp}</div>
+                <div style={{ padding: "14px 28px", fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: C.platinum }}>{feat}</div>
+                <div style={{ padding: "14px 28px", textAlign: "center", fontFamily: "'Outfit', sans-serif", fontSize: "0.82rem", color: C.emerald, fontWeight: 600 }}>{iy}</div>
+                <div style={{ padding: "14px 28px", textAlign: "center", fontFamily: "'Outfit', sans-serif", fontSize: "0.82rem", color: C.silver }}>{comp}</div>
               </div>
             ))}
           </div>
@@ -1222,8 +1335,8 @@ function BlogPage({ setPage }) {
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
             <Eyebrow>Insights</Eyebrow>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Automation Intelligence</h1>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Expert editorial on home automation, industrial IoT, renewable energy integration, and operational efficiency — written by the Iyonex engineering team.</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Automation Intelligence</h1>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Expert editorial on home automation, industrial IoT, renewable energy integration, and operational efficiency — written by the Iyonex engineering team.</p>
           </Reveal>
         </div>
       </section>
@@ -1238,16 +1351,16 @@ function BlogPage({ setPage }) {
                   onMouseLeave={e => e.currentTarget.style.borderColor = C.border}>
                   <div style={{ background: C.cardSlate, padding: "28px 28px 22px", position: "relative" }}>
                     <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.5, background: `linear-gradient(90deg, ${C.gold}60, transparent)` }} />
-                    <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.6rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 12 }}>{post.cat}</div>
-                    <h3 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 600, fontSize: "1.05rem", color: C.platinum, lineHeight: 1.5 }}>{post.title}</h3>
+                    <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.6rem", color: C.teal, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 12 }}>{post.cat}</div>
+                    <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: "1.05rem", color: C.platinum, lineHeight: 1.5 }}>{post.title}</h3>
                   </div>
                   <div style={{ padding: "22px 28px" }}>
-                    <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: C.silver, lineHeight: 1.8, marginBottom: 20 }}>{post.desc}</p>
+                    <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: C.silver, lineHeight: 1.8, marginBottom: 20 }}>{post.desc}</p>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.72rem", color: C.muted }}>{post.date} · {post.read} read</div>
+                      <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.72rem", color: C.muted }}>{post.date} · {post.read} read</div>
                       <div style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
                         <div style={{ width: 16, height: 1, background: C.gold }} />
-                        <span style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.7rem", color: C.gold, letterSpacing: "1px", textTransform: "uppercase" }}>Read</span>
+                        <span style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: C.gold, letterSpacing: "1px", textTransform: "uppercase" }}>Read</span>
                       </div>
                     </div>
                   </div>
@@ -1259,7 +1372,7 @@ function BlogPage({ setPage }) {
         <Reveal>
           <div style={{ textAlign: "center", marginTop: 64, paddingTop: 64, borderTop: `1px solid ${C.border}` }}>
             <Eyebrow>Have a Technical Question?</Eyebrow>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", color: C.silver, marginBottom: 28, lineHeight: 1.8 }}>Our engineering team is available to advise on any automation challenge.</p>
+            <p style={{ fontFamily: "'Outfit', sans-serif", color: C.silver, marginBottom: 28, lineHeight: 1.8 }}>Our engineering team is available to advise on any automation challenge.</p>
             <GoldBtn onClick={() => setPage("Contact")}>Contact Our Engineers</GoldBtn>
           </div>
         </Reveal>
@@ -1276,7 +1389,7 @@ function ContactPage() {
   const [sent, setSent] = useState(false);
   const handleSubmit = () => { if (!form.name || !form.phone) return alert("Please provide your name and phone number."); setSent(true); };
 
-  const inputStyle = { width:"100%", padding:"13px 16px", border:`1px solid ${C.border}`, borderRadius:3, fontFamily:"'DM Sans', sans-serif", fontSize:"0.9rem", outline:"none", background:C.cardSlate, color:C.platinum, boxSizing:"border-box", transition:"border-color 0.2s" };
+  const inputStyle = { width:"100%", padding:"13px 16px", border:`1px solid ${C.border}`, borderRadius:3, fontFamily:"'Outfit', sans-serif", fontSize:"0.9rem", outline:"none", background:C.cardSlate, color:C.platinum, boxSizing:"border-box", transition:"border-color 0.2s" };
 
   return (
     <div style={{ paddingTop: 76 }}>
@@ -1285,8 +1398,8 @@ function ContactPage() {
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
             <Eyebrow>Contact</Eyebrow>
-            <h1 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Begin Your Project</h1>
-            <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Contact Iyonex for a complimentary site assessment and project proposal. We respond to all enquiries within 2 business hours.</p>
+            <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.5rem, 5vw, 4rem)", color: C.platinum, marginBottom: 18, lineHeight: 1.1 }}>Begin Your Project</h1>
+            <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.05rem", color: C.silver, maxWidth: 560, lineHeight: 1.85 }}>Contact Iyonex for a complimentary site assessment and project proposal. We respond to all enquiries within 2 business hours.</p>
           </Reveal>
         </div>
       </section>
@@ -1294,39 +1407,39 @@ function ContactPage() {
       <section style={{ padding: "100px 64px", background: "linear-gradient(145deg, #131520 0%, #171826 100%)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 72, alignItems: "start" }}>
           <Reveal>
-            <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, color: C.platinum, fontSize: "1.8rem", marginBottom: 36 }}>Contact Information</h2>
+            <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: C.platinum, fontSize: "1.8rem", marginBottom: 36 }}>Contact Information</h2>
             {[[PHONE, `tel:+91${PHONE}`, "Phone"], [EMAIL, `mailto:${EMAIL}`, "Email"]].map(([val, href, label]) => (
               <div key={label} style={{ marginBottom: 24 }}>
-                <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>{label}</div>
-                <a href={href} style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "1rem", color: C.teal, textDecoration: "none" }}>{val}</a>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>{label}</div>
+                <a href={href} style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1rem", color: C.teal, textDecoration: "none" }}>{val}</a>
               </div>
             ))}
             <div style={{ marginBottom: 24 }}>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>Address</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: C.silver, lineHeight: 1.7 }}>{ADDRESS}</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>Address</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9rem", color: C.silver, lineHeight: 1.7 }}>{ADDRESS}</div>
             </div>
             <div style={{ marginBottom: 36 }}>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>Business Hours</div>
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.9rem", color: C.silver }}>Monday – Saturday: 9:00 AM – 7:00 PM<br />Sunday: 10:00 AM – 4:00 PM</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 6 }}>Business Hours</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.9rem", color: C.silver }}>Monday – Saturday: 9:00 AM – 7:00 PM<br />Sunday: 10:00 AM – 4:00 PM</div>
             </div>
             <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 8, padding: "28px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.5, background: `linear-gradient(90deg, ${C.gold}, transparent)` }} />
-              <div style={{ fontFamily: "'DM Sans', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 16 }}>Service Guarantee</div>
+              <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 16 }}>Service Guarantee</div>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
                 <div style={{ textAlign: "center", background: "rgba(0,182,122,0.08)", border: "1px solid rgba(0,182,122,0.2)", borderRadius: 6, padding: "16px" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.4rem", color: C.emerald }}>5 Years</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.silver, textTransform: "uppercase", letterSpacing: "1.5px", marginTop: 4 }}>Free Service</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.4rem", color: C.emerald }}>5 Years</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, textTransform: "uppercase", letterSpacing: "1.5px", marginTop: 4 }}>Free Service</div>
                 </div>
                 <div style={{ textAlign: "center", background: C.goldGlow, border: C.borderGold, borderRadius: 6, padding: "16px" }}>
-                  <div style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, fontSize: "1.4rem", color: C.gold }}>2 Years</div>
-                  <div style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.62rem", color: C.silver, textTransform: "uppercase", letterSpacing: "1.5px", marginTop: 4 }}>Warranty</div>
+                  <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.4rem", color: C.gold }}>2 Years</div>
+                  <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, textTransform: "uppercase", letterSpacing: "1.5px", marginTop: 4 }}>Warranty</div>
                 </div>
               </div>
             </div>
             <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-              <a href={WA} target="_blank" rel="noreferrer" style={{ background:"#25D366", color:"#fff", padding:"11px 20px", borderRadius:2, textDecoration:"none", fontFamily:"'DM Sans', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing:"1px" }}>WhatsApp</a>
-              <a href={`tel:+91${PHONE}`} style={{ background:`linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color:C.heroNav, padding:"11px 20px", borderRadius:2, textDecoration:"none", fontFamily:"'DM Sans', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing:"1px" }}>Call Now</a>
-              <a href={`mailto:${EMAIL}`} style={{ background:C.cardNavy, border:`1px solid ${C.border}`, color:C.platinum, padding:"11px 20px", borderRadius:2, textDecoration:"none", fontFamily:"'DM Sans', sans-serif", fontWeight:600, fontSize:"0.78rem", letterSpacing:"1px" }}>Email Us</a>
+              <a href={WA} target="_blank" rel="noreferrer" style={{ background:"#25D366", color:"#fff", padding:"11px 20px", borderRadius:2, textDecoration:"none", fontFamily:"'Outfit', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing:"1px" }}>WhatsApp</a>
+              <a href={`tel:+91${PHONE}`} style={{ background:`linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color:C.heroNav, padding:"11px 20px", borderRadius:2, textDecoration:"none", fontFamily:"'Outfit', sans-serif", fontWeight:700, fontSize:"0.78rem", letterSpacing:"1px" }}>Call Now</a>
+              <a href={`mailto:${EMAIL}`} style={{ background:C.cardNavy, border:`1px solid ${C.border}`, color:C.platinum, padding:"11px 20px", borderRadius:2, textDecoration:"none", fontFamily:"'Outfit', sans-serif", fontWeight:600, fontSize:"0.78rem", letterSpacing:"1px" }}>Email Us</a>
             </div>
           </Reveal>
 
@@ -1337,20 +1450,20 @@ function ContactPage() {
                 <div style={{ width: 64, height: 64, background: "rgba(0,182,122,0.1)", border: "1px solid rgba(0,182,122,0.3)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 24px" }}>
                   <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke={C.emerald} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
                 </div>
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, color: C.platinum, marginBottom: 14, fontSize: "1.6rem" }}>Enquiry Received</h2>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", color: C.silver, lineHeight: 1.85, marginBottom: 28 }}>Thank you for contacting Iyonex. A member of our team will reach you within 2 business hours to discuss your requirements and arrange a complimentary site visit.</p>
-                <button onClick={() => setSent(false)} style={{ background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "13px 28px", borderRadius: 2, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, cursor: "pointer", letterSpacing: "1.5px", textTransform: "uppercase" }}>Submit Another</button>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: C.platinum, marginBottom: 14, fontSize: "1.6rem" }}>Enquiry Received</h2>
+                <p style={{ fontFamily: "'Outfit', sans-serif", color: C.silver, lineHeight: 1.85, marginBottom: 28 }}>Thank you for contacting Iyonex. A member of our team will reach you within 2 business hours to discuss your requirements and arrange a complimentary site visit.</p>
+                <button onClick={() => setSent(false)} style={{ background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "13px 28px", borderRadius: 2, fontFamily: "'Outfit', sans-serif", fontWeight: 700, cursor: "pointer", letterSpacing: "1.5px", textTransform: "uppercase" }}>Submit Another</button>
               </div>
             ) : (
               <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 10, padding: "44px", position: "relative", overflow: "hidden" }}>
                 <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: `linear-gradient(90deg, transparent, ${C.gold}80, transparent)` }} />
-                <h2 style={{ fontFamily: "'Playfair Display', serif", fontWeight: 700, color: C.platinum, marginBottom: 6, fontSize: "1.5rem" }}>Project Enquiry</h2>
-                <p style={{ fontFamily: "'DM Sans', sans-serif", fontSize: "0.86rem", color: C.silver, marginBottom: 28 }}>Complete the form and we will respond within 2 business hours.</p>
+                <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: C.platinum, marginBottom: 6, fontSize: "1.5rem" }}>Project Enquiry</h2>
+                <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: C.silver, marginBottom: 28 }}>Complete the form and we will respond within 2 business hours.</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     {[["name","Full Name *","text"],["phone","Phone *","tel"]].map(([k, ph, t]) => (
                       <div key={k}>
-                        <label style={{ fontFamily:"'DM Sans', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>{ph}</label>
+                        <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>{ph}</label>
                         <input type={t} value={form[k]} onChange={e => setForm({...form, [k]:e.target.value})}
                           style={inputStyle}
                           onFocus={e => e.target.style.borderColor = C.borderGold}
@@ -1359,7 +1472,7 @@ function ContactPage() {
                     ))}
                   </div>
                   <div>
-                    <label style={{ fontFamily:"'DM Sans', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Email Address</label>
+                    <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Email Address</label>
                     <input type="email" value={form.email} onChange={e => setForm({...form, email:e.target.value})}
                       style={inputStyle}
                       onFocus={e => e.target.style.borderColor = C.borderGold}
@@ -1367,7 +1480,7 @@ function ContactPage() {
                   </div>
                   <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
                     <div>
-                      <label style={{ fontFamily:"'DM Sans', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Service Required</label>
+                      <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Service Required</label>
                       <select value={form.service} onChange={e => setForm({...form, service:e.target.value})}
                         style={{ ...inputStyle, color: form.service ? C.platinum : C.silver }}>
                         <option value="">Select Service</option>
@@ -1375,7 +1488,7 @@ function ContactPage() {
                       </select>
                     </div>
                     <div>
-                      <label style={{ fontFamily:"'DM Sans', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>City / Location</label>
+                      <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>City / Location</label>
                       <input type="text" value={form.city} onChange={e => setForm({...form, city:e.target.value})}
                         style={inputStyle}
                         onFocus={e => e.target.style.borderColor = C.borderGold}
@@ -1383,17 +1496,17 @@ function ContactPage() {
                     </div>
                   </div>
                   <div>
-                    <label style={{ fontFamily:"'DM Sans', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Project Details</label>
+                    <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Project Details</label>
                     <textarea rows={5} value={form.message} onChange={e => setForm({...form, message:e.target.value})}
                       placeholder="Describe your project — property type, scale, specific requirements..."
                       style={{ ...inputStyle, resize:"vertical" }}
                       onFocus={e => e.target.style.borderColor = C.borderGold}
                       onBlur={e => e.target.style.borderColor = C.border} />
                   </div>
-                  <div style={{ background: "rgba(0,182,122,0.07)", border: "1px solid rgba(0,182,122,0.18)", borderRadius: 4, padding: "12px 16px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.78rem", color: C.silver, lineHeight: 1.7 }}>
+                  <div style={{ background: "rgba(0,182,122,0.07)", border: "1px solid rgba(0,182,122,0.18)", borderRadius: 4, padding: "12px 16px", fontFamily: "'Outfit', sans-serif", fontSize: "0.78rem", color: C.silver, lineHeight: 1.7 }}>
                     Every enquiry includes a complimentary site visit, no-obligation quotation, and our standard 5-year service + 2-year warranty commitment.
                   </div>
-                  <button onClick={handleSubmit} style={{ background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "16px", borderRadius: 3, fontFamily: "'DM Sans', sans-serif", fontWeight: 700, fontSize: "0.88rem", cursor: "pointer", letterSpacing: "2px", textTransform: "uppercase", boxShadow: `0 8px 32px rgba(201,168,76,0.25)` }}>
+                  <button onClick={handleSubmit} style={{ background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, border: "none", padding: "16px", borderRadius: 3, fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.88rem", cursor: "pointer", letterSpacing: "2px", textTransform: "uppercase", boxShadow: `0 8px 32px rgba(201,168,76,0.25)` }}>
                     Submit Enquiry
                   </button>
                 </div>
@@ -1409,7 +1522,7 @@ function ContactPage() {
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
             {AREAS.map((a, i) => (
               <Reveal key={a} delay={i * 0.03}>
-                <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 3, padding: "8px 18px", fontFamily: "'DM Sans', sans-serif", fontSize: "0.82rem", color: C.silver, fontWeight: 500 }}>{a}</div>
+                <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 3, padding: "8px 18px", fontFamily: "'Outfit', sans-serif", fontSize: "0.82rem", color: C.silver, fontWeight: 500 }}>{a}</div>
               </Reveal>
             ))}
           </div>
@@ -1418,29 +1531,9 @@ function ContactPage() {
 
       <section style={{ padding: "0 64px 80px", background: "linear-gradient(135deg, #0A1C1A 0%, #0D2420 100%)" }}>
         <Reveal>
-          <div
-  style={{
-    maxWidth: 1200,
-    margin: "0 auto",
-    borderRadius: 14,
-    overflow: "hidden",
-    border: `2px solid ${C.blue}`,
-    boxShadow: "0 10px 30px rgba(0,0,0,0.2)"
-  }}
->
-  <iframe
-    title="Iyonex Location"
-    src="https://www.google.com/maps?q=11.9566,79.8189&z=15&output=embed"
-    width="100%"
-    height="420"
-    style={{
-      border: 0,
-      display: "block"
-    }}
-    allowFullScreen
-    loading="lazy"
-  />
-</div>
+          <div style={{ maxWidth: 1200, margin: "0 auto", borderRadius: 10, overflow: "hidden", border: `1px solid ${C.border}` }}>
+            <iframe title="Iyonex Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.55!2d79.8083!3d11.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5361e32f3fffff%3A0x1!2sLawspet%2C+Puducherry!5e0!3m2!1sen!2sin!4v1" width="100%" height="420" style={{ border: 0, display: "block", filter: "grayscale(80%) contrast(1.1)" }} allowFullScreen loading="lazy" />
+          </div>
         </Reveal>
       </section>
     </div>
@@ -1468,9 +1561,21 @@ export default function IyonexPremium() {
   };
 
   return (
-    <div style={{ fontFamily: "'DM Sans', sans-serif", background: C.navy, overflowX: "hidden", width: "100vw", minWidth: "100vw", margin: 0, padding: 0 }}>
+    <div style={{ fontFamily: "'Outfit', sans-serif", background: C.navy, overflowX: "hidden", width: "100vw", minWidth: "100vw", margin: 0, padding: 0 }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Outfit:wght@300;400;500;600;700&family=Syncopate:wght@400;700&display=swap');
+        @keyframes float3d { 0%,100% { transform: translateY(0) rotateX(0deg) rotateY(0deg); } 33% { transform: translateY(-12px) rotateX(3deg) rotateY(2deg); } 66% { transform: translateY(-6px) rotateX(-2deg) rotateY(-3deg); } }
+        @keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+        @keyframes orb-pulse { 0%,100% { transform: scale(1); opacity: 0.6; } 50% { transform: scale(1.15); opacity: 1; } }
+        @keyframes scanline { 0% { top: -5%; } 100% { top: 105%; } }
+        @keyframes particle-rise { 0% { opacity: 0; transform: translateY(60px) scale(0.5); } 20% { opacity: 0.8; } 100% { opacity: 0; transform: translateY(-120px) scale(1.2); } }
+        @keyframes text-glow { 0%,100% { text-shadow: 0 0 20px rgba(201,168,76,0.3); } 50% { text-shadow: 0 0 40px rgba(201,168,76,0.7), 0 0 80px rgba(201,168,76,0.3); } }
+        @keyframes border-trace { 0% { background-position: 0% 0%; } 100% { background-position: 100% 100%; } }
+        @keyframes depth-rise { 0% { opacity: 0; transform: translateY(60px) scale(0.95) rotateX(8deg); } 100% { opacity: 1; transform: translateY(0) scale(1) rotateX(0deg); } }
+        @keyframes ring-spin { 0% { transform: rotateX(60deg) rotateZ(0deg); } 100% { transform: rotateX(60deg) rotateZ(360deg); } }
+        @keyframes ring-spin-rev { 0% { transform: rotateX(60deg) rotateZ(360deg); } 100% { transform: rotateX(60deg) rotateZ(0deg); } }
+        .ring3d { animation: ring-spin 18s linear infinite; transform-style: preserve-3d; }
+        .ring3d-rev { animation: ring-spin-rev 24s linear infinite; transform-style: preserve-3d; }
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html, body {
           width: 100% !important;
