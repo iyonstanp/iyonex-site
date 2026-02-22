@@ -400,32 +400,33 @@ function Navbar({ page, setPage }) {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn); return () => window.removeEventListener("scroll", fn);
   }, []);
-  useEffect(() => { setMenuOpen(false); }, [page]);
+  useEffect(() => { setMenuOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }, [page]);
 
   const pages = ["Home", "About", "Services", "Products", "Pricing", "Blog", "Contact"];
-
   const navTo = (p) => { setPage(p); setMenuOpen(false); };
+
+  const pageIcons = { Home:"⚡", About:"🏢", Services:"⚙️", Products:"📦", Pricing:"💰", Blog:"📖", Contact:"📞" };
 
   return (
     <>
       <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, height: 68,
-        background: scrolled || menuOpen ? "rgba(8,14,26,0.97)" : "transparent",
-        backdropFilter: scrolled || menuOpen ? "blur(24px) saturate(180%)" : "none",
-        borderBottom: scrolled || menuOpen ? `1px solid ${C.border}` : "none",
-        transition: "all 0.5s cubic-bezier(.4,0,.2,1)",
-        padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between"
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, height: 64,
+        background: scrolled || menuOpen ? "rgba(6,10,20,0.98)" : "transparent",
+        backdropFilter: scrolled || menuOpen ? "blur(20px) saturate(180%)" : "none",
+        borderBottom: scrolled || menuOpen ? `1px solid rgba(201,168,76,0.15)` : "none",
+        transition: "all 0.4s cubic-bezier(.4,0,.2,1)",
+        padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between"
       }}>
         {/* Logo */}
-        <div onClick={() => navTo("Home")} style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer", flexShrink: 0 }}>
-          <div style={{ width: 38, height: 38, borderRadius: 4, background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke={C.heroNav} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+        <div onClick={() => navTo("Home")} style={{ display: "flex", alignItems: "center", gap: 10, cursor: "pointer", flexShrink: 0 }}>
+          <div style={{ width: 36, height: 36, borderRadius: 8, background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 4px 16px rgba(201,168,76,0.35)` }}>
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke={C.heroNav} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div>
-            <div style={{ fontFamily: "'Syncopate', sans-serif", fontWeight: 700, fontSize: "1.1rem", color: C.platinum, letterSpacing: "4px", lineHeight: 1 }}>IYONEX</div>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.45rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
+            <div style={{ fontFamily: "'Syncopate', sans-serif", fontWeight: 700, fontSize: "1rem", color: C.platinum, letterSpacing: "4px", lineHeight: 1 }}>IYONEX</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.4rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
           </div>
         </div>
 
@@ -433,12 +434,12 @@ function Navbar({ page, setPage }) {
         <div className="nav-desktop-links">
           {pages.map(p => (
             <button key={p} onClick={() => navTo(p)} style={{
-              background: "none", border: "none", padding: "8px 14px",
+              background: "none", border: "none", padding: "8px 12px",
               fontFamily: "'Outfit', sans-serif", fontWeight: page === p ? 600 : 400,
-              fontSize: "0.78rem", letterSpacing: "0.8px", textTransform: "uppercase",
-              color: page === p ? C.gold : "rgba(232,236,240,0.6)",
+              fontSize: "0.75rem", letterSpacing: "0.8px", textTransform: "uppercase",
+              color: page === p ? C.gold : "rgba(232,236,240,0.65)",
               cursor: "pointer", transition: "color 0.2s",
-              borderBottom: page === p ? `1px solid ${C.gold}` : "1px solid transparent"
+              borderBottom: page === p ? `2px solid ${C.gold}` : "2px solid transparent"
             }}>{p}</button>
           ))}
         </div>
@@ -449,43 +450,84 @@ function Navbar({ page, setPage }) {
         </div>
 
         {/* Mobile hamburger */}
-        <button className="mob-menu-btn" onClick={() => setMenuOpen(o => !o)}
-          style={{ background: "none", border: `1px solid ${menuOpen ? C.borderGold : C.border}`, borderRadius: 6, padding: "8px 10px", cursor: "pointer", flexDirection: "column", gap: 5, transition: "border-color 0.2s" }}>
-          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
-          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", opacity: menuOpen ? 0 : 1 }} />
-          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
+        <button className="mob-menu-btn" onClick={() => setMenuOpen(o => !o)} style={{
+          background: menuOpen ? `rgba(201,168,76,0.12)` : "rgba(255,255,255,0.06)",
+          border: `1px solid ${menuOpen ? C.gold + "60" : "rgba(255,255,255,0.12)"}`,
+          borderRadius: 10, padding: "9px 11px", cursor: "pointer",
+          flexDirection: "column", justifyContent: "center", alignItems: "center",
+          gap: 5, transition: "all 0.3s"
+        }}>
+          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.35s cubic-bezier(.4,0,.2,1)", transform: menuOpen ? "rotate(45deg) translateY(7px)" : "none" }} />
+          <span style={{ display: "block", width: 14, height: 2, background: menuOpen ? C.gold : "rgba(255,255,255,0.5)", borderRadius: 2, transition: "all 0.35s", opacity: menuOpen ? 0 : 1, transform: menuOpen ? "scaleX(0)" : "none" }} />
+          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.35s cubic-bezier(.4,0,.2,1)", transform: menuOpen ? "rotate(-45deg) translateY(-7px)" : "none" }} />
         </button>
       </nav>
 
-      {/* Mobile nav overlay */}
+      {/* Mobile nav overlay - full screen beautiful menu */}
       <div className={`mob-nav-overlay${menuOpen ? " open" : ""}`}>
-        {pages.map((p, i) => (
-          <button key={p} onClick={() => navTo(p)} style={{
-            background: page === p ? `rgba(201,168,76,0.08)` : "transparent",
-            border: `1px solid ${page === p ? C.borderGold : "transparent"}`,
-            borderRadius: 6, padding: "14px 20px", width: "100%", textAlign: "left",
-            fontFamily: "'Outfit', sans-serif", fontWeight: page === p ? 700 : 400,
-            fontSize: "1rem", letterSpacing: "1px", textTransform: "uppercase",
-            color: page === p ? C.gold : C.platinum, cursor: "pointer",
-            transition: "all 0.2s", animationDelay: `${i * 0.05}s`
-          }}>{p}</button>
-        ))}
-        <div style={{ marginTop: 24, paddingTop: 24, borderTop: `1px solid ${C.border}` }}>
-          <a href={WA} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "#fff", padding: "14px 24px", borderRadius: 6, textDecoration: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.9rem", marginBottom: 12 }}>
+        {/* Menu header */}
+        <div style={{ marginBottom: 8, paddingBottom: 20, borderBottom: `1px solid rgba(201,168,76,0.15)` }}>
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.6rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginBottom: 4 }}>Navigation</div>
+          <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "1.3rem", color: C.platinum, fontWeight: 600 }}>Where to?</div>
+        </div>
+
+        {/* Nav links */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 6, flex: 1 }}>
+          {pages.map((p, i) => (
+            <button key={p} onClick={() => navTo(p)} style={{
+              background: page === p
+                ? `linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05))`
+                : "rgba(255,255,255,0.02)",
+              border: `1px solid ${page === p ? "rgba(201,168,76,0.4)" : "rgba(255,255,255,0.06)"}`,
+              borderRadius: 12, padding: "15px 18px", width: "100%", textAlign: "left",
+              cursor: "pointer", transition: "all 0.2s",
+              display: "flex", alignItems: "center", gap: 14
+            }}>
+              <span style={{ fontSize: "1.2rem", width: 28, textAlign: "center" }}>{pageIcons[p]}</span>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: page === p ? 700 : 500, fontSize: "0.95rem", letterSpacing: "0.5px", color: page === p ? C.gold : C.platinum }}>{p}</div>
+              </div>
+              {page === p && <span style={{ color: C.gold, fontSize: "1rem" }}>→</span>}
+            </button>
+          ))}
+        </div>
+
+        {/* Bottom CTA buttons */}
+        <div style={{ marginTop: 20, paddingTop: 20, borderTop: `1px solid rgba(201,168,76,0.15)`, display: "flex", flexDirection: "column", gap: 10 }}>
+          <a href={WA} target="_blank" rel="noreferrer" style={{
+            display: "flex", alignItems: "center", justifyContent: "center", gap: 10,
+            background: "linear-gradient(135deg, #25D366, #1da851)", color: "#fff",
+            padding: "15px 24px", borderRadius: 12, textDecoration: "none",
+            fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.95rem",
+            boxShadow: "0 8px 24px rgba(37,211,102,0.3)"
+          }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.54 5.877L.057 23.943l6.204-1.626A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.5-5.228-1.375l-.374-.222-3.683.965.982-3.593-.244-.389A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-            WhatsApp Us
+            Chat on WhatsApp
           </a>
-          <a href={`tel:+91${PHONE}`} style={{ display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, padding: "14px 24px", borderRadius: 6, textDecoration: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.9rem" }}>
-            Call: {PHONE}
+          <a href={`tel:+91${PHONE}`} style={{
+            display: "flex", alignItems: "center", justifyContent: "center",
+            background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`,
+            color: "#080e1a", padding: "15px 24px", borderRadius: 12,
+            textDecoration: "none", fontFamily: "'Outfit', sans-serif",
+            fontWeight: 700, fontSize: "0.95rem", boxShadow: `0 8px 24px rgba(201,168,76,0.35)`
+          }}>
+            📞 Call: +91 {PHONE}
           </a>
+        </div>
+
+        {/* Address footer */}
+        <div style={{ marginTop: 16, padding: "12px 0", borderTop: `1px solid rgba(255,255,255,0.05)` }}>
+          <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.7rem", color: "rgba(139,151,168,0.6)", textAlign: "center", lineHeight: 1.6 }}>
+            📍 Lawspet, Puducherry · Mon–Sat 9AM–7PM
+          </div>
         </div>
       </div>
 
       {/* WhatsApp float */}
       <a href={WA} target="_blank" rel="noreferrer"
-        style={{ position: "fixed", bottom: 24, right: 24, zIndex: 300, width: 50, height: 50, background: "#25D366", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 24px rgba(37,211,102,0.45)", textDecoration: "none", transition: "transform 0.2s, box-shadow 0.2s" }}
-        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(37,211,102,0.6)"; }}
-        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(37,211,102,0.45)"; }}>
+        style={{ position: "fixed", bottom: 24, right: 20, zIndex: 300, width: 52, height: 52, background: "linear-gradient(135deg, #25D366, #1da851)", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 6px 28px rgba(37,211,102,0.5)", textDecoration: "none", transition: "transform 0.2s, box-shadow 0.2s" }}
+        onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/>
           <path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.54 5.877L.057 23.943l6.204-1.626A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.5-5.228-1.375l-.374-.222-3.683.965.982-3.593-.244-.389A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
@@ -630,15 +672,15 @@ function HomePage({ setPage }) {
           <div>
             <Reveal>
               <Eyebrow>Puducherry's Premier Automation Company</Eyebrow>
-              <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(3.2rem, 5.8vw, 5.5rem)", color: C.platinum, lineHeight: 1.02, letterSpacing: "-0.02em", marginBottom: 28, animation: "text-glow 4s ease-in-out infinite" }}>
+              <h1 className="mob-h1" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "clamp(2.8rem, 5.8vw, 5.5rem)", color: C.platinum, lineHeight: 1.05, letterSpacing: "-0.02em", marginBottom: 28, animation: "text-glow 4s ease-in-out infinite" }}>
                 Engineering<br />
                 <span style={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text", backgroundImage: `linear-gradient(135deg, ${C.gold} 0%, ${C.goldLight} 50%, ${C.gold} 100%)`, backgroundSize: "200% auto", animation: "shimmer 3s linear infinite" }}>Intelligent</span><br />
                 Automation
               </h1>
-              <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.1rem", color: C.silver, lineHeight: 1.9, maxWidth: 520, marginBottom: 44 }}>
+              <p className="mob-p" style={{ fontFamily: "'Outfit', sans-serif", fontSize: "1.1rem", color: C.silver, lineHeight: 1.9, maxWidth: 520, marginBottom: 44 }}>
                 Iyonex delivers enterprise-grade home and industrial automation, electrical engineering, and custom product development — backed by our industry-leading <strong style={{ color: C.platinum }}>5-Year Service Contract</strong> and <strong style={{ color: C.platinum }}>2-Year Product Warranty</strong>.
               </p>
-              <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 56 }}>
+              <div className="mob-btns" style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 56 }}>
                 <GoldBtn onClick={() => setPage("Services")}>Explore Services</GoldBtn>
                 <GhostBtn onClick={() => setPage("Contact")}>Request Consultation</GhostBtn>
               </div>
@@ -1394,7 +1436,7 @@ function BlogPage({ setPage }) {
       </section>
 
       <section style={{ padding: "100px 64px", background: "linear-gradient(135deg, #0F1E35 0%, #131C30 100%)" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto"}} className="r-auto-3">
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}className="r-auto-3">
           {BLOG.map((post, i) => (
             <Reveal key={post.title} delay={i * 0.07}>
               <Card3D intensity={10}>
@@ -1663,111 +1705,164 @@ export default function IyonexPremium() {
         button { -webkit-tap-highlight-color: transparent; }
         img { max-width: 100%; }
 
-        /* ── MOBILE NAV ────────────────────────── */
-        .mob-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        /* ══════════════════════════════════════════
+           NAV CLASSES
+        ══════════════════════════════════════════ */
+        .mob-menu-btn { display: none; }
         .nav-desktop-links { display: flex; gap: 0; align-items: center; }
         .nav-desktop-cta { display: block; }
-        .mob-nav-overlay { display: none; }
+        .mob-nav-overlay { display: none; pointer-events: none; }
 
-        /* ── RESPONSIVE HELPERS ───────────────── */
-        .r-hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; width: 100%; }
-        .r-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
-        .r-2col-start { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
-        .r-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-        .r-4col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-        .r-5col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
-        .r-showcase { display: grid; grid-template-columns: 1.7fr 1fr 1fr; grid-template-rows: 300px 300px; gap: 16px; }
-        .r-stat-row { display: flex; gap: 0; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.07); }
-        .r-stat-item { flex: 1; padding-right: 24px; border-right: 1px solid rgba(255,255,255,0.07); margin-right: 24px; }
+        /* ══════════════════════════════════════════
+           DESKTOP GRID CLASSES
+        ══════════════════════════════════════════ */
+        .r-hero-grid   { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; width: 100%; }
+        .r-2col        { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+        .r-2col-start  { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
+        .r-3col        { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .r-4col        { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .r-5col        { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+        .r-showcase    { display: grid; grid-template-columns: 1.7fr 1fr 1fr; grid-template-rows: 300px 300px; gap: 16px; }
+        .r-stat-row    { display: flex; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .r-stat-item   { flex: 1; padding-right: 24px; border-right: 1px solid rgba(255,255,255,0.08); margin-right: 24px; }
         .r-stat-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
-        .r-pad { padding: 120px 64px; }
-        .r-pad-sm { padding: 80px 64px; }
-        .r-pad-xs { padding: 48px 64px; }
-        .r-hero-pad { padding: 130px 64px 100px; }
+        .r-pad         { padding: 120px 64px; }
+        .r-pad-sm      { padding: 80px 64px; }
+        .r-pad-xs      { padding: 48px 64px; }
+        .r-hero-pad    { padding: 130px 64px 100px; }
         .r-footer-grid { display: grid; grid-template-columns: 2.5fr 1fr 1.4fr 1.8fr; gap: 56px; margin-bottom: 64px; }
-        .r-contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; align-items: start; }
-        .r-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .r-contact-grid{ display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; align-items: start; }
+        .r-form-row    { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
         .float-badge-wrap { display: block; }
-        .r-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-        .r-3col-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
-        .r-auto-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .r-auto-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
-        .r-auto-product { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
-        .r-timeline { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .r-badges-row { display: flex; gap: 12px; flex-wrap: wrap; }
-        .r-cert-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .r-price-grid  { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 18px; }
+        .r-3col-strip  { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+        .r-auto-3      { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 20px; }
+        .r-auto-4      { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 12px; }
+        .r-auto-product{ display: grid; grid-template-columns: repeat(auto-fill, minmax(310px,1fr)); gap: 18px; }
+        .r-timeline    { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .r-badges-row  { display: flex; gap: 12px; flex-wrap: wrap; }
+        .r-cert-row    { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
         .r-marquee-strip { display: flex; }
 
+        /* ══════════════════════════════════════════
+           TABLET  ≤1024px
+        ══════════════════════════════════════════ */
         @media (max-width: 1024px) {
-          .r-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+          .r-hero-grid  { grid-template-columns: 1fr; }
           .r-hero-grid > *:last-child { display: none; }
-          .r-2col { gap: 48px; }
-          .r-2col-start { gap: 48px; }
-          .r-footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
-          .r-contact-grid { gap: 48px; }
-          .r-5col { grid-template-columns: repeat(3, 1fr); }
-          .r-showcase { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 220px 220px; }
-          .r-pad { padding: 80px 40px; }
-          .r-pad-sm { padding: 60px 40px; }
-          .r-pad-xs { padding: 40px 40px; }
-          .r-hero-pad { padding: 110px 40px 80px; }
-          nav { padding: 0 24px !important; }
-          .nav-desktop-links button { padding: 8px 10px !important; font-size: 0.72rem !important; }
+          .r-2col       { gap: 48px; }
+          .r-2col-start { gap: 40px; }
+          .r-footer-grid{ grid-template-columns: 1fr 1fr; gap: 36px; }
+          .r-contact-grid { gap: 40px; }
+          .r-5col       { grid-template-columns: repeat(3,1fr); }
+          .r-showcase   { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 220px 220px; }
+          .r-pad        { padding: 80px 40px; }
+          .r-pad-sm     { padding: 60px 40px; }
+          .r-hero-pad   { padding: 110px 40px 80px; }
+          nav { padding: 0 20px !important; }
+          .nav-desktop-links button { padding: 8px 9px !important; font-size: 0.72rem !important; }
         }
 
+        /* ══════════════════════════════════════════
+           MOBILE  ≤768px  — full redesign
+        ══════════════════════════════════════════ */
         @media (max-width: 768px) {
-          .mob-menu-btn { display: flex; align-items: center; justify-content: center; }
+
+          /* — NAV — */
+          .mob-menu-btn  { display: flex; align-items: center; justify-content: center; }
           .nav-desktop-links { display: none !important; }
-          .nav-desktop-cta { display: none !important; }
+          .nav-desktop-cta   { display: none !important; }
+
+          /* — MOBILE MENU OVERLAY — */
           .mob-nav-overlay.open {
-            display: flex; flex-direction: column; position: fixed;
-            top: 68px; left: 0; right: 0; bottom: 0;
-            background: rgba(8,14,26,0.99); backdrop-filter: blur(24px);
-            padding: 32px 24px; gap: 8px; z-index: 199; overflow-y: auto;
-            border-top: 1px solid rgba(201,168,76,0.2);
+            display: flex; flex-direction: column;
+            position: fixed; inset: 0; top: 64px;
+            background: #060c18;
+            padding: 24px 20px 32px;
+            z-index: 199; overflow-y: auto;
+            pointer-events: all;
+            border-top: 2px solid #C9A84C;
+            animation: slideDown 0.28s cubic-bezier(.4,0,.2,1);
           }
-          .r-hero-grid { grid-template-columns: 1fr; gap: 40px; }
-          .r-hero-grid > *:last-child { display: none; }
-          .r-2col { grid-template-columns: 1fr !important; gap: 36px !important; }
-          .r-2col-start { grid-template-columns: 1fr !important; gap: 36px !important; }
-          .r-3col { grid-template-columns: 1fr 1fr; gap: 10px; }
-          .r-4col { grid-template-columns: 1fr 1fr; gap: 10px; }
-          .r-5col { grid-template-columns: 1fr 1fr; gap: 12px; }
-          .r-showcase { grid-template-columns: 1fr; grid-template-rows: auto; }
-          .r-showcase > *:not(:first-child) { height: 180px; }
-          .r-showcase > *:first-child { height: 260px; grid-row: auto !important; }
-          .r-stat-row { flex-wrap: wrap; gap: 16px 0; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 28px; }
-          .r-stat-item { min-width: 50%; border-right: none !important; margin-right: 0 !important; padding-right: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 16px; }
-          .r-stat-item:nth-child(odd) { padding-right: 12px !important; }
-          .float-badge-wrap { display: none !important; }
-          .r-pad { padding: 56px 20px; }
-          .r-pad-sm { padding: 44px 20px; }
-          .r-pad-xs { padding: 32px 20px; }
-          .r-hero-pad { padding: 96px 20px 56px; }
-          .r-footer-grid { grid-template-columns: 1fr; gap: 32px; }
-          .r-contact-grid { grid-template-columns: 1fr; gap: 36px; }
-          .r-form-row { grid-template-columns: 1fr; gap: 14px; }
-          .r-price-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
-          .r-3col-strip { grid-template-columns: 1fr; }
-          .r-auto-3 { grid-template-columns: 1fr; }
-          .r-auto-4 { grid-template-columns: 1fr 1fr; gap: 10px; }
-          .r-auto-product { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
-          .r-timeline { grid-template-columns: 1fr; }
+          @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-12px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+
+          /* — GRIDS → SINGLE COLUMN — */
+          .r-hero-grid  { grid-template-columns: 1fr !important; gap: 0; }
+          .r-hero-grid > *:last-child { display: none !important; }
+          .r-2col       { grid-template-columns: 1fr !important; gap: 28px !important; }
+          .r-2col-start { grid-template-columns: 1fr !important; gap: 28px !important; }
+          .r-3col       { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-4col       { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-5col       { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-showcase   { grid-template-columns: 1fr; gap: 10px; }
+          .r-showcase > * { height: 220px !important; }
+          .r-3col-strip { grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+          .r-auto-3     { grid-template-columns: 1fr; gap: 14px; }
+          .r-auto-4     { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-auto-product{ grid-template-columns: 1fr; gap: 14px; }
+          .r-price-grid { grid-template-columns: 1fr; gap: 14px; }
+          .r-timeline   { grid-template-columns: 1fr; gap: 10px; }
+          .r-footer-grid{ grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 32px; }
+          .r-contact-grid{ grid-template-columns: 1fr; gap: 28px; }
+          .r-form-row   { grid-template-columns: 1fr; gap: 12px; }
           .r-badges-row { flex-direction: column; gap: 10px; }
-          .r-marquee-strip { flex-direction: column; gap: 16px !important; align-items: flex-start !important; }
+          .r-marquee-strip { flex-direction: column !important; gap: 14px !important; }
+          .r-cert-row   { gap: 8px; }
+
+          /* — STATS ROW — */
+          .r-stat-row   { flex-wrap: wrap; gap: 0; padding-top: 24px; }
+          .r-stat-item  { min-width: 50%; border-right: none !important; margin-right: 0 !important;
+                          padding: 14px 16px 14px 0 !important;
+                          border-bottom: 1px solid rgba(255,255,255,0.07); }
+          .r-stat-item:last-child { border-bottom: none; }
+
+          /* — SECTION PADDING — */
+          .r-pad        { padding: 52px 18px; }
+          .r-pad-sm     { padding: 40px 18px; }
+          .r-pad-xs     { padding: 28px 18px; }
+          .r-hero-pad   { padding: 88px 18px 52px; }
+
+          /* — HERO TEXT — */
+          .mob-h1 { font-size: 2.6rem !important; line-height: 1.08 !important; margin-bottom: 18px !important; }
+          .mob-p  { font-size: 0.95rem !important; line-height: 1.75 !important; margin-bottom: 28px !important; }
+          .mob-btns { gap: 10px !important; margin-bottom: 36px !important; }
+          .mob-eyebrow { font-size: 0.55rem !important; }
+
+          /* — CARDS — */
+          .mob-card { padding: 20px 16px !important; }
+          .mob-img  { height: 200px !important; }
+
+          /* — FLOAT BADGES HIDDEN — */
+          .float-badge-wrap { display: none !important; }
+
+          /* — SECTION TITLES — */
+          .mob-section-title { font-size: 1.8rem !important; }
+
+          /* — BUTTONS — */
+          .mob-btn { padding: 13px 24px !important; font-size: 0.8rem !important; width: 100%; justify-content: center; }
+
+          /* — FOOTER — */
+          .r-footer-grid > *:first-child { grid-column: 1 / -1; }
         }
 
-        @media (max-width: 480px) {
-          .r-3col { grid-template-columns: 1fr; }
-          .r-4col { grid-template-columns: 1fr 1fr; }
-          .r-5col { grid-template-columns: 1fr; }
-          .r-auto-4 { grid-template-columns: 1fr; }
-          .r-pad { padding: 44px 16px; }
-          .r-pad-sm { padding: 36px 16px; }
-          .r-hero-pad { padding: 88px 16px 48px; }
-          .r-stat-item { min-width: 100%; }
-          .r-auto-product { max-width: 100%; }
-          .r-price-grid { max-width: 100%; }
+        /* ══════════════════════════════════════════
+           SMALL PHONES  ≤430px
+        ══════════════════════════════════════════ */
+        @media (max-width: 430px) {
+          .r-3col       { grid-template-columns: 1fr; }
+          .r-4col       { grid-template-columns: 1fr 1fr; }
+          .r-5col       { grid-template-columns: 1fr; }
+          .r-auto-4     { grid-template-columns: 1fr; }
+          .r-3col-strip { grid-template-columns: 1fr; }
+          .r-footer-grid{ grid-template-columns: 1fr; }
+          .r-pad        { padding: 40px 16px; }
+          .r-pad-sm     { padding: 32px 16px; }
+          .r-hero-pad   { padding: 84px 16px 44px; }
+          .r-stat-item  { min-width: 50%; }
+          .mob-h1       { font-size: 2.2rem !important; }
         }
       `}</style>
       <Navbar page={page} setPage={setPage} />
