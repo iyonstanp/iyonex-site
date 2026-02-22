@@ -219,6 +219,21 @@ const SERVICE_IMGS = [
 ];
 
 /* ─── HOOKS ──────────────────────────────────────────────────────────────────── */
+function useMediaQuery(query) {
+  const [matches, setMatches] = useState(() => {
+    if (typeof window !== "undefined") return window.matchMedia(query).matches;
+    return false;
+  });
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const handler = (e) => setMatches(e.matches);
+    mq.addEventListener("change", handler);
+    setMatches(mq.matches);
+    return () => mq.removeEventListener("change", handler);
+  }, [query]);
+  return matches;
+}
+
 function useInView(threshold = 0.06) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -380,58 +395,95 @@ const CornerMark = ({ top, right, bottom, left, color = C.gold, size = 16 }) => 
 /* ─── NAVBAR ─────────────────────────────────────────────────────────────────── */
 function Navbar({ page, setPage }) {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", fn); return () => window.removeEventListener("scroll", fn);
   }, []);
+  useEffect(() => { setMenuOpen(false); }, [page]);
 
   const pages = ["Home", "About", "Services", "Products", "Pricing", "Blog", "Contact"];
+
+  const navTo = (p) => { setPage(p); setMenuOpen(false); };
 
   return (
     <>
       <nav style={{
-        position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, height: 76,
-        background: scrolled ? "rgba(11,22,40,0.97)" : "transparent",
-        backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-        borderBottom: scrolled ? `1px solid ${C.border}` : "none",
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 200, height: 68,
+        background: scrolled || menuOpen ? "rgba(8,14,26,0.97)" : "transparent",
+        backdropFilter: scrolled || menuOpen ? "blur(24px) saturate(180%)" : "none",
+        borderBottom: scrolled || menuOpen ? `1px solid ${C.border}` : "none",
         transition: "all 0.5s cubic-bezier(.4,0,.2,1)",
-        padding: "0 56px", display: "flex", alignItems: "center", justifyContent: "space-between"
+        padding: "0 32px", display: "flex", alignItems: "center", justifyContent: "space-between"
       }}>
         {/* Logo */}
-        <div onClick={() => setPage("Home")} style={{ display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }}>
-          <div style={{ position: "relative", width: 40, height: 40, borderRadius: 4, background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <div onClick={() => navTo("Home")} style={{ display: "flex", alignItems: "center", gap: 12, cursor: "pointer", flexShrink: 0 }}>
+          <div style={{ width: 38, height: 38, borderRadius: 4, background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
               <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke={C.heroNav} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
           <div>
-            <div style={{ fontFamily: "'Syncopate', sans-serif", fontWeight: 700, fontSize: "1.25rem", color: C.platinum, letterSpacing: "5px", lineHeight: 1 }}>IYONEX</div>
-            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.5rem", color: C.gold, letterSpacing: "3.5px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
+            <div style={{ fontFamily: "'Syncopate', sans-serif", fontWeight: 700, fontSize: "1.1rem", color: C.platinum, letterSpacing: "4px", lineHeight: 1 }}>IYONEX</div>
+            <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.45rem", color: C.gold, letterSpacing: "3px", textTransform: "uppercase", marginTop: 2 }}>Smart Automation</div>
           </div>
         </div>
 
-        {/* Nav links */}
-        <div style={{ display: "flex", gap: 0 }}>
+        {/* Desktop nav links */}
+        <div className="nav-desktop-links" style={{ display: "flex", gap: 0 }}>
           {pages.map(p => (
-            <button key={p} onClick={() => setPage(p)} style={{
-              background: "none", border: "none", padding: "8px 16px",
+            <button key={p} onClick={() => navTo(p)} style={{
+              background: "none", border: "none", padding: "8px 14px",
               fontFamily: "'Outfit', sans-serif", fontWeight: page === p ? 600 : 400,
-              fontSize: "0.82rem", letterSpacing: "0.8px", textTransform: "uppercase",
+              fontSize: "0.78rem", letterSpacing: "0.8px", textTransform: "uppercase",
               color: page === p ? C.gold : "rgba(232,236,240,0.6)",
               cursor: "pointer", transition: "color 0.2s",
               borderBottom: page === p ? `1px solid ${C.gold}` : "1px solid transparent"
-            }}>
-              {p}
-            </button>
+            }}>{p}</button>
           ))}
         </div>
 
-        <GoldBtn onClick={() => setPage("Contact")}>Consult Now</GoldBtn>
+        {/* Desktop CTA */}
+        <div className="nav-desktop-cta">
+          <GoldBtn onClick={() => navTo("Contact")}>Consult Now</GoldBtn>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button className="mob-menu-btn" onClick={() => setMenuOpen(o => !o)}
+          style={{ background: "none", border: `1px solid ${menuOpen ? C.borderGold : C.border}`, borderRadius: 6, padding: "8px 10px", cursor: "pointer", display: "none", flexDirection: "column", gap: 5, transition: "border-color 0.2s" }}>
+          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(45deg) translate(5px, 5px)" : "none" }} />
+          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", opacity: menuOpen ? 0 : 1 }} />
+          <span style={{ display: "block", width: 20, height: 2, background: menuOpen ? C.gold : C.platinum, borderRadius: 2, transition: "all 0.3s", transform: menuOpen ? "rotate(-45deg) translate(5px, -5px)" : "none" }} />
+        </button>
       </nav>
+
+      {/* Mobile nav overlay */}
+      <div className={`mob-nav-overlay${menuOpen ? " open" : ""}`} style={{ display: "none" }}>
+        {pages.map((p, i) => (
+          <button key={p} onClick={() => navTo(p)} style={{
+            background: page === p ? `rgba(201,168,76,0.08)` : "transparent",
+            border: `1px solid ${page === p ? C.borderGold : "transparent"}`,
+            borderRadius: 6, padding: "14px 20px", width: "100%", textAlign: "left",
+            fontFamily: "'Outfit', sans-serif", fontWeight: page === p ? 700 : 400,
+            fontSize: "1rem", letterSpacing: "1px", textTransform: "uppercase",
+            color: page === p ? C.gold : C.platinum, cursor: "pointer",
+            transition: "all 0.2s", animationDelay: `${i * 0.05}s`
+          }}>{p}</button>
+        ))}
+        <div style={{ marginTop: 24, paddingTop: 24, borderTop: `1px solid ${C.border}` }}>
+          <a href={WA} target="_blank" rel="noreferrer" style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 10, background: "#25D366", color: "#fff", padding: "14px 24px", borderRadius: 6, textDecoration: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.9rem", marginBottom: 12 }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.54 5.877L.057 23.943l6.204-1.626A11.93 11.93 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.686-.5-5.228-1.375l-.374-.222-3.683.965.982-3.593-.244-.389A9.945 9.945 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            WhatsApp Us
+          </a>
+          <a href={`tel:+91${PHONE}`} style={{ display: "flex", alignItems: "center", justifyContent: "center", background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, color: C.heroNav, padding: "14px 24px", borderRadius: 6, textDecoration: "none", fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: "0.9rem" }}>
+            Call: {PHONE}
+          </a>
+        </div>
+      </div>
 
       {/* WhatsApp float */}
       <a href={WA} target="_blank" rel="noreferrer"
-        style={{ position: "fixed", bottom: 32, right: 32, zIndex: 300, width: 52, height: 52, background: "#25D366", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 24px rgba(37,211,102,0.45)", textDecoration: "none", transition: "transform 0.2s, box-shadow 0.2s" }}
+        style={{ position: "fixed", bottom: 24, right: 24, zIndex: 300, width: 50, height: 50, background: "#25D366", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 4px 24px rgba(37,211,102,0.45)", textDecoration: "none", transition: "transform 0.2s, box-shadow 0.2s" }}
         onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.1)"; e.currentTarget.style.boxShadow = "0 8px 32px rgba(37,211,102,0.6)"; }}
         onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)"; e.currentTarget.style.boxShadow = "0 4px 24px rgba(37,211,102,0.45)"; }}>
         <svg width="24" height="24" viewBox="0 0 24 24" fill="white">
@@ -451,7 +503,7 @@ function Footer({ setPage }) {
       {/* Golden top accent */}
       <div style={{ height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}, transparent)` }} />
       <div style={{ padding: "80px 64px 48px", maxWidth: 1320, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "2.5fr 1fr 1.4fr 1.8fr", gap: 56, marginBottom: 64 }}>
+        <div className="r-footer-grid">
           <div>
             <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 24 }}>
               <div style={{ width: 40, height: 40, borderRadius: 4, background: `linear-gradient(135deg, ${C.gold}, ${C.goldDim})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -573,7 +625,7 @@ function HomePage({ setPage }) {
         </div>
         <Particles />
 
-        <div style={{ maxWidth: 1280, margin: "0 auto", width: "100%", padding: "130px 64px 100px", display: "grid", gridTemplateColumns: "1.15fr 1fr", gap: 80, alignItems: "center", position: "relative", zIndex: 2 }}>
+        <div className="r-hero-pad r-hero-grid" style={{ maxWidth: 1280, margin: "0 auto", width: "100%", position: "relative", zIndex: 2 }}>
           {/* Left */}
           <div>
             <Reveal>
@@ -591,9 +643,9 @@ function HomePage({ setPage }) {
                 <GhostBtn onClick={() => setPage("Contact")}>Request Consultation</GhostBtn>
               </div>
               {/* Stats */}
-              <div style={{ display: "flex", gap: 0, paddingTop: 36, borderTop: `1px solid ${C.border}` }}>
+              <div className="r-stat-row">
                 {[["500+", "Projects Delivered"], ["14+", "Cities Served"], ["99%", "Client Retention"], ["6+", "Years Expertise"]].map(([n, l], i) => (
-                  <div key={l} style={{ flex: 1, paddingRight: 24, borderRight: i < 3 ? `1px solid ${C.border}` : "none", marginRight: i < 3 ? 24 : 0 }}>
+                  <div key={l} className="r-stat-item" style={{ flex: 1 }}>
                     <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.3rem", backgroundImage: `linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>{n}</div>
                     <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.72rem", color: C.silver, letterSpacing: "0.5px", marginTop: 4 }}>{l}</div>
                   </div>
@@ -604,7 +656,7 @@ function HomePage({ setPage }) {
 
           {/* Right — Dashboard with floating badges */}
           <Reveal direction="left" delay={0.25}>
-            <div style={{ position: "relative" }}>
+            <div className="float-badge-wrap" style={{ position: "relative" }}>
               {/* Floating 3D badges */}
               <FloatBadge icon="⚡" label="Live Energy" value="18.4 kWh" color={C.gold} style={{ top: -32, right: -24, animationDelay: "0s", zIndex: 10 }} />
               <FloatBadge icon="🔒" label="Security" value="Armed" color={C.emerald} style={{ bottom: 40, left: -36, animationDelay: "1.8s", zIndex: 10 }} />
@@ -670,7 +722,7 @@ function HomePage({ setPage }) {
 
       {/* ── GOLD MARQUEE STRIP ─────────────────────────────────────────────── */}
       <div style={{ background: `linear-gradient(90deg, ${C.goldDim}, ${C.gold}, ${C.goldDim})`, padding: "18px 64px" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
+        <div className="r-marquee-strip" style={{ maxWidth: 1280, margin: "0 auto", justifyContent: "space-between", alignItems: "center", gap: 16, flexWrap: "wrap" }}>
           {[["5-Year Free Service","All projects covered, zero fees"], ["2-Year Warranty","Full product coverage"], ["IE Act Licensed","Certified engineers only"], ["Free Site Survey","No-obligation assessment"]].map(([t, d]) => (
             <div key={t} style={{ display: "flex", alignItems: "center", gap: 12 }}>
               <div style={{ width: 4, height: 4, background: C.heroNav, borderRadius: "50%", opacity: 0.6 }} />
@@ -684,11 +736,11 @@ function HomePage({ setPage }) {
       </div>
 
       {/* ── WHY IYONEX ─────────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: `linear-gradient(135deg, ${C.navy} 0%, #12284A 100%)`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad" style={{ background: `linear-gradient(135deg, ${C.navy} 0%, #12284A 100%)`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "40%", right: "-5%", width: 600, height: 600, background: `radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%)`, pointerEvents: "none" }} />
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Why Iyonex" title="The Standard for Automation Excellence" subtitle="We engineer intelligent systems that perform flawlessly for years — and stand behind every installation with service commitments our competitors cannot match." center light /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 20 }}>
+          <div className="r-auto-3">
             {[
               ["01","Certified Engineers","IE Act licensed electricians and certified PLC specialists on every project — no subcontracting, ever."],
               ["02","5-Year Service","Industry-leading 5-year free service contract. No call-out fees, no labour charges."],
@@ -715,7 +767,7 @@ function HomePage({ setPage }) {
       </section>
 
       {/* ── SERVICES GRID ──────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: `linear-gradient(150deg, ${C.emeraldBg} 0%, #0E2820 50%, #0A1C18 100%)`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad" style={{ background: `linear-gradient(150deg, ${C.emeraldBg} 0%, #0E2820 50%, #0A1C18 100%)`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", bottom: "20%", left: "0%", width: 500, height: 500, background: `radial-gradient(circle, rgba(0,200,180,0.07) 0%, transparent 65%)`, pointerEvents: "none" }} />
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Solutions" title="Comprehensive Automation Services" subtitle="From a single smart switch to a fully automated industrial facility — Iyonex has the expertise and infrastructure to deliver." light center /></Reveal>
@@ -744,10 +796,10 @@ function HomePage({ setPage }) {
       </section>
 
       {/* ── IMAGE SHOWCASE ─────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: "linear-gradient(135deg, #0F1E35 0%, #12284A 100%)" }}>
+      <section className="r-pad" style={{ background: "linear-gradient(135deg, #0F1E35 0%, #12284A 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Our Work" title="Real Projects, Transformative Results" subtitle="From luxury smart villas to high-throughput industrial facilities — our portfolio speaks for itself." light center /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "1.7fr 1fr 1fr", gridTemplateRows: "300px 300px", gap: 16 }}>
+          <div className="r-showcase">
             <Card3D style={{ gridRow: "1 / 3" }} intensity={8}>
               <div style={{ height: "100%", borderRadius: 10, overflow: "hidden", position: "relative" }}>
                 <img src={IMGS.homeAuto} alt="Smart home" style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.7s ease" }}
@@ -784,7 +836,7 @@ function HomePage({ setPage }) {
           </div>
 
           {/* Extra 3 image strip below */}
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 16, marginTop: 16 }}>
+          <div className="r-3col-strip">
             {[[IMGS.plc, "PLC & SCADA Control", "Industrial Automation"], [IMGS.villa, "Smart Luxury Villas", "Residential Premium"], [IMGS.energy, "Solar & Energy Systems", "Renewable Energy"]].map(([src, title, cat]) => (
               <Card3D key={title} intensity={10}>
                 <div style={{ height: 200, borderRadius: 10, overflow: "hidden", position: "relative" }}>
@@ -804,10 +856,10 @@ function HomePage({ setPage }) {
       </section>
 
       {/* ── CASE STUDIES ───────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: C.pearl }}>
+      <section className="r-pad" style={{ background: C.pearl }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Project Portfolio" title="Measurable Results, Every Engagement" subtitle="A selection of transformative automation projects delivered across residential, industrial, and commercial sectors." center /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 20 }}>
+          <div className="r-auto-3">
             {CASE_STUDIES.map((cs, i) => (
               <Reveal key={cs.title} delay={i * 0.07}>
                 <Card3D intensity={10}>
@@ -832,7 +884,7 @@ function HomePage({ setPage }) {
       </section>
 
       {/* ── TESTIMONIALS ───────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: `linear-gradient(135deg, #1A0F28 0%, #1F1030 50%, #160E22 100%)`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad" style={{ background: `linear-gradient(135deg, #1A0F28 0%, #1F1030 50%, #160E22 100%)`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: 900, height: 400, background: `radial-gradient(ellipse, rgba(201,168,76,0.05) 0%, transparent 65%)`, pointerEvents: "none" }} />
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Client Perspectives" title="Trusted by Industry Leaders" light center /></Reveal>
@@ -866,10 +918,10 @@ function HomePage({ setPage }) {
       </section>
 
       {/* ── INDUSTRIES ─────────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: "linear-gradient(145deg, #0A1C1A 0%, #0D2420 50%, #081814 100%)" }}>
+      <section className="r-pad" style={{ background: "linear-gradient(145deg, #0A1C1A 0%, #0D2420 50%, #081814 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Industries Served" title="Expertise Across Every Sector" subtitle="From individual residences to large-scale industrial facilities — Iyonex has deep domain knowledge across a diverse range of sectors." light center /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
+          <div className="r-auto-4">
             {[["Residential Homes","Smart apartments, villas & independent houses"],["Manufacturing","Factory and process automation at scale"],["Hotels & Hospitality","Guest room and BMS automation"],["Healthcare","Access control and environmental monitoring"],["Education","Smart campus and classroom solutions"],["Retail & Commercial","Lighting, HVAC and security management"],["Water Utilities","Pump and dosing automation"],["Renewable Energy","Solar and storage management systems"],["Warehousing","Conveyor, sorting and access control"],["Pharmaceuticals","Clean-room environmental monitoring"],["Food Processing","Cold storage and line automation"],["Construction","Pre-installation smart wiring planning"]].map(([title, desc]) => (
               <Reveal key={title}>
                 <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 8, padding: "22px 20px", transition: "border-color 0.3s, background 0.3s", cursor: "default" }}
@@ -886,7 +938,7 @@ function HomePage({ setPage }) {
       </section>
 
       {/* ── CTA BANNER ─────────────────────────────────────────────────────── */}
-      <section style={{ padding: "120px 64px", background: `linear-gradient(135deg, ${C.royalBlue} 0%, ${C.heroNav} 100%)`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad" style={{ background: `linear-gradient(135deg, ${C.royalBlue} 0%, ${C.heroNav} 100%)`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}60, transparent)` }} />
         <Reveal>
@@ -915,7 +967,7 @@ function HomePage({ setPage }) {
 function AboutPage({ setPage }) {
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "70vh", padding: "100px 64px 80px", display: "flex", alignItems: "center", background: `linear-gradient(145deg, rgba(5,10,20,0.96) 0%, rgba(8,16,32,0.88) 60%, rgba(0,100,90,0.1) 100%), url(${IMGS.factory}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad-sm" style={{ minHeight: "70vh", display: "flex", alignItems: "center", background: `linear-gradient(145deg, rgba(5,10,20,0.96) 0%, rgba(8,16,32,0.88) 60%, rgba(0,100,90,0.1) 100%), url(${IMGS.factory}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <Particles />
@@ -928,8 +980,8 @@ function AboutPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "120px 64px", background: C.pearl }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 96, alignItems: "start" }}>
+      <section className="r-pad" style={{ background: C.pearl }}>
+        <div className="r-2col-start" style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal>
             <Eyebrow>Our Story</Eyebrow>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "2.4rem", color: C.darkText, lineHeight: 1.15, marginBottom: 28 }}>From a Lawspet Workshop to South India's Trusted Partner</h2>
@@ -950,7 +1002,7 @@ function AboutPage({ setPage }) {
                 </div>
               </div>
             </Card3D>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+            <div className="r-timeline">
               {[["2018","Founded in Lawspet, Puducherry",C.gold],["2019","First industrial project — Villupuram",C.teal],["2021","Mobile platform launched — iOS & Android",C.emerald],["2022","Chennai expansion. 200+ clients",C.gold],["2023","R&D product division established",C.teal],["2025","500+ projects across 14 cities",C.gold]].map(([yr, desc, col]) => (
                 <div key={yr} style={{ background: C.white, border: "1px solid #E2E8F0", borderRadius: 8, padding: "18px 16px" }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: col, fontSize: "1.25rem", marginBottom: 7 }}>{yr}</div>
@@ -962,7 +1014,7 @@ function AboutPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "80px 64px", background: `linear-gradient(90deg, rgba(5,10,20,0.95), rgba(8,16,32,0.9), rgba(5,10,20,0.95)), url(${IMGS.team}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad-sm" style={{ background: `linear-gradient(90deg, rgba(5,10,20,0.95), rgba(8,16,32,0.9), rgba(5,10,20,0.95)), url(${IMGS.team}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}60, transparent)` }} />
         <Reveal>
           <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 24, textAlign: "center" }}>
@@ -976,10 +1028,10 @@ function AboutPage({ setPage }) {
         </Reveal>
       </section>
 
-      <section style={{ padding: "120px 64px", background: "linear-gradient(140deg, #1A0F28 0%, #220F22 60%, #1A1030 100%)" }}>
+      <section className="r-pad" style={{ background: "linear-gradient(140deg, #1A0F28 0%, #220F22 60%, #1A1030 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Purpose" title="Mission, Vision & Promise" light center /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
+          <div className="r-auto-3">
             {[["Mission","To deliver precision-engineered automation solutions that measurably improve quality of life, operational efficiency, and safety — making intelligent technology accessible to every Indian home and industrial facility.",C.gold],["Vision","To be the most trusted automation engineering company in South India — recognised for technical excellence, service integrity, and long-term client partnerships built on genuine results.",C.teal],["Promise","Every Iyonex project carries our 5-year complimentary service contract and 2-year product warranty — not as a marketing claim, but as a reflection of our confidence in the systems we engineer.",C.emerald]].map(([title, text, col]) => (
               <Reveal key={title}>
                 <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 8, padding: "40px 32px", position: "relative", overflow: "hidden" }}>
@@ -996,10 +1048,10 @@ function AboutPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "120px 64px", background: "linear-gradient(135deg, #0D1830 0%, #111F3A 100%)" }}>
+      <section className="r-pad" style={{ background: "linear-gradient(135deg, #0D1830 0%, #111F3A 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Leadership" title="The Team Behind Iyonex" subtitle="Certified engineers, experienced designers, and dedicated support professionals." light center /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 18 }}>
+          <div className="r-auto-4">
             {[["Founder & Chief Executive","B.E. Electrical & Electronics","10+ years in automation, IoT and electrical engineering. Certified PLC programmer and smart home specialist.",C.gold],["Head of Industrial Automation","M.E. Control Systems","Specialist in Siemens S7, Allen-Bradley and Delta PLC platforms. 40+ industrial projects across Tamil Nadu.",C.teal],["Principal Electrical Engineer","B.E. EEE — IE Act Licensed","Licensed electrical contractor with 200+ residential and commercial projects. Smart panel design specialist.",C.gold],["IoT Product Engineer","B.Tech Electronics & Comm.","Designs Iyonex custom PCBs, embedded firmware and IoT devices. Expert in ESP32, STM32, LoRaWAN.",C.teal],["Software & App Developer","B.Tech Computer Science","Develops Iyonex platform for iOS, Android and web. Specialist in real-time IoT dashboards and MQTT.",C.emerald],["Client Success Manager","MBA Operations Management","Manages the 5-year service programme, warranty administration, and all post-installation relationships.",C.gold]].map(([role, qual, desc, col]) => (
               <Reveal key={role}>
                 <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 8, padding: "28px 24px", transition: "border-color 0.3s" }}
@@ -1016,7 +1068,7 @@ function AboutPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "80px 64px", background: "linear-gradient(135deg, #0A1C1A 0%, #0E2420 100%)" }}>
+      <section className="r-pad-sm" style={{ background: "linear-gradient(135deg, #0A1C1A 0%, #0E2420 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Credentials" title="Certified, Licensed & Compliant" subtitle="Every project meets or exceeds applicable Indian and international standards." light center /></Reveal>
           <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
@@ -1045,7 +1097,7 @@ function AboutPage({ setPage }) {
 function ServicesPage({ setPage }) {
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "55vh", display: "flex", alignItems: "center", padding: "100px 64px 80px", background: `linear-gradient(145deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0.88) 100%), url(${IMGS.industrial}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
+      <section className="r-pad-sm" style={{ minHeight: "55vh", display: "flex", alignItems: "center", background: `linear-gradient(145deg, rgba(5,10,20,0.95) 0%, rgba(5,10,20,0.88) 100%), url(${IMGS.industrial}) center/cover no-repeat`, position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: `linear-gradient(${C.border} 1px, transparent 1px), linear-gradient(90deg, ${C.border} 1px, transparent 1px)`, backgroundSize: "80px 80px", opacity: 0.3 }} />
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
@@ -1109,18 +1161,18 @@ function ServicesPage({ setPage }) {
         );
 
         return (
-          <section key={s.icon} style={{ padding: "80px 64px", background: bg, borderBottom: `1px solid ${C.border}` }}>
-            <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1fr", gap: 72, alignItems: "center" }}>
+          <section className="r-pad-sm" key={s.icon} style={{ background: bg, borderBottom: `1px solid ${C.border}` }}>
+            <div className="r-2col" style={{ maxWidth: 1280, margin: "0 auto" }}>
               {isEven ? <>{TextCol}{ImageCol}</> : <>{ImageCol}{TextCol}</>}
             </div>
           </section>
         );
       })}
 
-      <section style={{ padding: "120px 64px", background: "linear-gradient(145deg, #0D1830 0%, #0F1E38 50%, #091424 100%)" }}>
+      <section className="r-pad" style={{ background: "linear-gradient(145deg, #0D1830 0%, #0F1E38 50%, #091424 100%)" }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Engagement Process" title="How We Deliver Every Project" subtitle="A structured, transparent process from initial consultation through post-installation support." light center /></Reveal>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: 24 }}>
+          <div className="r-5col">
             {[["01","Consultation","Define requirements, site constraints, and project objectives in detail."],["02","Site Survey","Complimentary on-site assessment by a certified engineer."],["03","Proposal","Itemised quotation delivered within 24 hours."],["04","Installation","Certified team executes on schedule with daily updates."],["05","Commissioning","Full system testing, app setup, and client training."]].map(([num, title, desc], i) => (
               <Reveal key={num} delay={i * 0.09}>
                 <div style={{ textAlign: "center", padding: "0 8px" }}>
@@ -1174,7 +1226,7 @@ function ProductsPage({ setPage }) {
               }}>{cat}</button>
             ))}
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(310px, 1fr))", gap: 18 }}>
+          <div className="r-auto-product">
             {filtered.map((p, i) => (
               <Reveal key={p.sku} delay={i * 0.05}>
                 <Card3D intensity={10}>
@@ -1213,7 +1265,7 @@ function ProductsPage({ setPage }) {
       {/* ── 3D PROJECT GALLERY ─────────────────────────────────────────────── */}
       <section style={{ padding: "0 64px 80px", background: C.heroNav }}>
         <div style={{ maxWidth: 1280, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
+          <div className="r-4col">
             {[[IMGS.homeAuto, "Home"], [IMGS.plc, "Industrial"], [IMGS.solar, "Solar"], [IMGS.security, "Security"]].map(([src, label]) => (
               <Card3D key={label} intensity={12}>
                 <div style={{ height: 220, borderRadius: 8, overflow: "hidden", position: "relative" }}>
@@ -1229,7 +1281,7 @@ function ProductsPage({ setPage }) {
         </div>
       </section>
 
-      <section style={{ padding: "80px 64px", background: `linear-gradient(135deg, ${C.royalBlue}, ${C.heroNav})`, textAlign: "center", position: "relative" }}>
+      <section className="r-pad-sm" style={{ background: `linear-gradient(135deg, ${C.royalBlue}, ${C.heroNav})`, textAlign: "center", position: "relative" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <Reveal>
           <Eyebrow>Custom Products</Eyebrow>
@@ -1330,7 +1382,7 @@ function PricingPage({ setPage }) {
 function BlogPage({ setPage }) {
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "55vh", display: "flex", alignItems: "center", padding: "100px 64px 80px", background: `linear-gradient(160deg, rgba(8,11,15,0.95), rgba(13,17,24,0.9)), url(${IMGS.factory}) center/cover no-repeat`, position: "relative" }}>
+      <section className="r-pad-sm" style={{ minHeight: "55vh", display: "flex", alignItems: "center", background: `linear-gradient(160deg, rgba(8,11,15,0.95), rgba(13,17,24,0.9)), url(${IMGS.factory}) center/cover no-repeat`, position: "relative" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
@@ -1342,7 +1394,7 @@ function BlogPage({ setPage }) {
       </section>
 
       <section style={{ padding: "100px 64px", background: "linear-gradient(135deg, #0F1E35 0%, #131C30 100%)" }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(360px, 1fr))", gap: 20 }}>
+       <div style={{ maxWidth: 1280, margin: "0 auto" }} className="r-auto-3">
           {BLOG.map((post, i) => (
             <Reveal key={post.title} delay={i * 0.07}>
               <Card3D intensity={10}>
@@ -1393,7 +1445,7 @@ function ContactPage() {
 
   return (
     <div style={{ paddingTop: 76 }}>
-      <section style={{ minHeight: "50vh", display: "flex", alignItems: "center", padding: "100px 64px 80px", background: `linear-gradient(160deg, rgba(8,11,15,0.97), rgba(13,17,24,0.93)), url(${IMGS.puducherry}) center/cover no-repeat`, position: "relative" }}>
+      <section className="r-pad-sm" style={{ minHeight: "50vh", display: "flex", alignItems: "center", background: `linear-gradient(160deg, rgba(8,11,15,0.97), rgba(13,17,24,0.93)), url(${IMGS.puducherry}) center/cover no-repeat`, position: "relative" }}>
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.gold}50, transparent)` }} />
         <div style={{ maxWidth: 1280, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <Reveal>
@@ -1404,8 +1456,8 @@ function ContactPage() {
         </div>
       </section>
 
-      <section style={{ padding: "100px 64px", background: "linear-gradient(145deg, #131520 0%, #171826 100%)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", display: "grid", gridTemplateColumns: "1fr 1.5fr", gap: 72, alignItems: "start" }}>
+      <section className="r-pad-sm" style={{ background: "linear-gradient(145deg, #131520 0%, #171826 100%)" }}>
+        <div className="r-contact-grid" style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Reveal>
             <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: C.platinum, fontSize: "1.8rem", marginBottom: 36 }}>Contact Information</h2>
             {[[PHONE, `tel:+91${PHONE}`, "Phone"], [EMAIL, `mailto:${EMAIL}`, "Email"]].map(([val, href, label]) => (
@@ -1425,7 +1477,7 @@ function ContactPage() {
             <div style={{ background: C.cardNavy, border: `1px solid ${C.border}`, borderRadius: 8, padding: "28px", marginBottom: 24, position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1.5, background: `linear-gradient(90deg, ${C.gold}, transparent)` }} />
               <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 600, fontSize: "0.62rem", color: C.gold, letterSpacing: "2.5px", textTransform: "uppercase", marginBottom: 16 }}>Service Guarantee</div>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <div className="r-timeline">
                 <div style={{ textAlign: "center", background: "rgba(0,182,122,0.08)", border: "1px solid rgba(0,182,122,0.2)", borderRadius: 6, padding: "16px" }}>
                   <div style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, fontSize: "1.4rem", color: C.emerald }}>5 Years</div>
                   <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.62rem", color: C.silver, textTransform: "uppercase", letterSpacing: "1.5px", marginTop: 4 }}>Free Service</div>
@@ -1460,7 +1512,7 @@ function ContactPage() {
                 <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 700, color: C.platinum, marginBottom: 6, fontSize: "1.5rem" }}>Project Enquiry</h2>
                 <p style={{ fontFamily: "'Outfit', sans-serif", fontSize: "0.86rem", color: C.silver, marginBottom: 28 }}>Complete the form and we will respond within 2 business hours.</p>
                 <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="r-form-row">
                     {[["name","Full Name *","text"],["phone","Phone *","tel"]].map(([k, ph, t]) => (
                       <div key={k}>
                         <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>{ph}</label>
@@ -1478,7 +1530,7 @@ function ContactPage() {
                       onFocus={e => e.target.style.borderColor = C.borderGold}
                       onBlur={e => e.target.style.borderColor = C.border} />
                   </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14 }}>
+                  <div className="r-form-row">
                     <div>
                       <label style={{ fontFamily:"'Outfit', sans-serif", fontSize:"0.62rem", fontWeight:600, color:C.gold, letterSpacing:"2px", textTransform:"uppercase", display:"block", marginBottom:7 }}>Service Required</label>
                       <select value={form.service} onChange={e => setForm({...form, service:e.target.value})}
@@ -1516,7 +1568,7 @@ function ContactPage() {
         </div>
       </section>
 
-      <section style={{ padding: "80px 64px", background: "linear-gradient(135deg, #0A1C1A 0%, #0D2420 100%)" }}>
+      <section className="r-pad-sm" style={{ background: "linear-gradient(135deg, #0A1C1A 0%, #0D2420 100%)" }}>
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <Reveal><SectionTitle eyebrow="Coverage" title="Service Regions" subtitle="Headquartered in Puducherry — delivering projects across South India and nationally for large industrial engagements." light center /></Reveal>
           <div style={{ display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center" }}>
@@ -1544,6 +1596,16 @@ function ContactPage() {
    APP ROOT
 ═══════════════════════════════════════════════════════════════════════════════ */
 export default function IyonexPremium() {
+  useEffect(() => {
+    // Ensure proper viewport meta
+    let meta = document.querySelector('meta[name="viewport"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'viewport';
+      document.head.appendChild(meta);
+    }
+    meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=5.0';
+  }, []);
   const [page, setPage] = useState("Home");
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [page]);
 
@@ -1598,6 +1660,113 @@ export default function IyonexPremium() {
         input::placeholder, textarea::placeholder { color: ${C.muted}; }
         select option { background: ${C.cardSlate}; color: ${C.platinum}; }
         section { width: 100%; }
+        button { -webkit-tap-highlight-color: transparent; }
+        img { max-width: 100%; }
+
+        /* ── MOBILE NAV ────────────────────────── */
+        .mob-menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+        .nav-desktop-links { display: flex; gap: 0; }
+        .nav-desktop-cta { display: block; }
+        .mob-nav-overlay { display: none; }
+
+        /* ── RESPONSIVE HELPERS ───────────────── */
+        .r-hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; width: 100%; }
+        .r-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
+        .r-2col-start { display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: start; }
+        .r-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .r-4col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+        .r-5col { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
+        .r-showcase { display: grid; grid-template-columns: 1.7fr 1fr 1fr; grid-template-rows: 300px 300px; gap: 16px; }
+        .r-stat-row { display: flex; gap: 0; padding-top: 36px; border-top: 1px solid rgba(255,255,255,0.07); }
+        .r-stat-item { flex: 1; padding-right: 24px; border-right: 1px solid rgba(255,255,255,0.07); margin-right: 24px; }
+        .r-stat-item:last-child { border-right: none; margin-right: 0; padding-right: 0; }
+        .r-pad { padding: 120px 64px; }
+        .r-pad-sm { padding: 80px 64px; }
+        .r-pad-xs { padding: 48px 64px; }
+        .r-hero-pad { padding: 130px 64px 100px; }
+        .r-footer-grid { display: grid; grid-template-columns: 2.5fr 1fr 1.4fr 1.8fr; gap: 56px; margin-bottom: 64px; }
+        .r-contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; align-items: start; }
+        .r-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .float-badge-wrap { display: block; }
+        .r-price-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
+        .r-3col-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+        .r-auto-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .r-auto-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+        .r-auto-product { display: grid; grid-template-columns: repeat(auto-fill, minmax(310px, 1fr)); gap: 18px; }
+        .r-timeline { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .r-badges-row { display: flex; gap: 12px; flex-wrap: wrap; }
+        .r-cert-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+        .r-marquee-strip { display: flex; }
+
+        @media (max-width: 1024px) {
+          .r-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+          .r-hero-grid > *:last-child { display: none; }
+          .r-2col { gap: 48px; }
+          .r-2col-start { gap: 48px; }
+          .r-footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+          .r-contact-grid { gap: 48px; }
+          .r-5col { grid-template-columns: repeat(3, 1fr); }
+          .r-showcase { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 220px 220px; }
+          .r-pad { padding: 80px 40px; }
+          .r-pad-sm { padding: 60px 40px; }
+          .r-pad-xs { padding: 40px 40px; }
+          .r-hero-pad { padding: 110px 40px 80px; }
+        }
+
+        @media (max-width: 768px) {
+          .mob-menu-btn { display: flex; align-items: center; justify-content: center; }
+          .nav-desktop-links { display: none !important; }
+          .nav-desktop-cta { display: none !important; }
+          .mob-nav-overlay.open {
+            display: flex; flex-direction: column; position: fixed;
+            top: 68px; left: 0; right: 0; bottom: 0;
+            background: rgba(8,14,26,0.99); backdrop-filter: blur(24px);
+            padding: 32px 24px; gap: 8px; z-index: 199; overflow-y: auto;
+            border-top: 1px solid rgba(201,168,76,0.2);
+          }
+          .r-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+          .r-hero-grid > *:last-child { display: none; }
+          .r-2col { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .r-2col-start { grid-template-columns: 1fr !important; gap: 36px !important; }
+          .r-3col { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-4col { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-5col { grid-template-columns: 1fr 1fr; gap: 12px; }
+          .r-showcase { grid-template-columns: 1fr; grid-template-rows: auto; }
+          .r-showcase > *:not(:first-child) { height: 180px; }
+          .r-showcase > *:first-child { height: 260px; grid-row: auto !important; }
+          .r-stat-row { flex-wrap: wrap; gap: 16px 0; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 28px; }
+          .r-stat-item { min-width: 50%; border-right: none !important; margin-right: 0 !important; padding-right: 0 !important; border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 16px; }
+          .r-stat-item:nth-child(odd) { padding-right: 12px !important; }
+          .float-badge-wrap { display: none !important; }
+          .r-pad { padding: 56px 20px; }
+          .r-pad-sm { padding: 44px 20px; }
+          .r-pad-xs { padding: 32px 20px; }
+          .r-hero-pad { padding: 96px 20px 56px; }
+          .r-footer-grid { grid-template-columns: 1fr; gap: 32px; }
+          .r-contact-grid { grid-template-columns: 1fr; gap: 36px; }
+          .r-form-row { grid-template-columns: 1fr; gap: 14px; }
+          .r-price-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; }
+          .r-3col-strip { grid-template-columns: 1fr; }
+          .r-auto-3 { grid-template-columns: 1fr; }
+          .r-auto-4 { grid-template-columns: 1fr 1fr; gap: 10px; }
+          .r-auto-product { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; }
+          .r-timeline { grid-template-columns: 1fr; }
+          .r-badges-row { flex-direction: column; gap: 10px; }
+          .r-marquee-strip { flex-direction: column; gap: 16px !important; align-items: flex-start !important; }
+        }
+
+        @media (max-width: 480px) {
+          .r-3col { grid-template-columns: 1fr; }
+          .r-4col { grid-template-columns: 1fr 1fr; }
+          .r-5col { grid-template-columns: 1fr; }
+          .r-auto-4 { grid-template-columns: 1fr; }
+          .r-pad { padding: 44px 16px; }
+          .r-pad-sm { padding: 36px 16px; }
+          .r-hero-pad { padding: 88px 16px 48px; }
+          .r-stat-item { min-width: 100%; }
+          .r-auto-product { max-width: 100%; }
+          .r-price-grid { max-width: 100%; }
+        }
       `}</style>
       <Navbar page={page} setPage={setPage} />
       <main style={{ width: "100%" }}>{render()}</main>
