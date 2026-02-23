@@ -10,7 +10,7 @@ const WA = "https://wa.me/918111080117";
 /* Palette: Royal Navy · Deep Emerald · Burgundy Plum · Warm Slate · Champagne Gold */
 const C = {
   /* Section Backgrounds — Rich & Varied */
-  heroNav:    "#0B1628",      /* Hero: deep royal navy */
+  heroNav:    "rgba(255, 255, 255, 0)",      /* Hero: deep royal navy */
   navy:       "#0F1E35",      /* Differentiators: midnight navy */
   emeraldBg:  "#0A1F1A",      /* Services: deep forest emerald */
   burgundy:   "#1A0F1E",      /* Testimonials: rich plum/burgundy */
@@ -194,7 +194,7 @@ const IMGS = {
   homeAuto:   "https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1000&q=90",
   industrial: "https://images.unsplash.com/photo-1565043589221-1a6fd9ae45c7?w=1000&q=90",
   solar:      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1000&q=90",
-  security:   "https://images.unsplash.com/photo-1593440408186-59b1bfecc4dd?w=1000&q=90",
+  security:   "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1000&q=90",
   office:     "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1000&q=90",
   factory:    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=1000&q=90",
   team:       "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&q=90",
