@@ -1630,13 +1630,21 @@ function ContactPage() {
         </div>
       </section>
 
-      <section style={{ padding: "0 40px 80px", background: "linear-gradient(135deg, #0A1C1A 0%, #0D2420 100%)" }}>
-        <Reveal>
-          <div style={{ maxWidth: 1200, margin: "0 auto", borderRadius: 10, overflow: "hidden", border: `1px solid ${C.border}` }}>
-            <iframe title="Iyonex Location" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.55!2d79.8083!3d11.9341!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a5361e32f3fffff%3A0x1!2sLawspet%2C+Puducherry!5e0!3m2!1sen!2sin!4v1" width="100%" height="420" style={{ border: 0, display: "block", filter: "grayscale(80%) contrast(1.1)" }} allowFullScreen loading="lazy" />
-          </div>
-        </Reveal>
-      </section>
+<section style={{ padding: "0 0 80px", background: "linear-gradient(135deg, #0A1C1A 0%, #0D2420 100%)" }}>
+  <Reveal>
+    <div style={{ width: "100%", borderRadius: 0, overflow: "hidden", border: `1px solid ${C.border}` }}>
+      <iframe
+        title="Iyonex Location"
+        src="https://www.google.com/maps?q=11.956600,79.818828&z=15&output=embed"
+        width="100%"
+        height="600"
+        style={{ border: 0, display: "block", filter: "none" }}
+        allowFullScreen
+        loading="lazy"
+      />
+    </div>
+  </Reveal>
+</section>
     </div>
   );
 }
